@@ -39,7 +39,7 @@ export const Review = () => {
           </div>
         </div>
       </div>
-      <div>Hola Para el commit</div>
+      <div>Ahora creo que si se puede</div>
     </>
   );
 };
