@@ -70,10 +70,10 @@ const MyNavbar = () => {
                   ) : (
                     <li className="nav-item">
                       <a
-                        href="/Hotel/CardHotel"
-                        className="px-3 py-2 flex items-center  text-white  "
+                        href="/MakeWorkOffer"
+                        className="px-5 py-2 flex items-center  text-white  "
                       >
-                        Hoteles
+                        Ofertas de trabajo
                       </a>
                     </li>
                   )}
