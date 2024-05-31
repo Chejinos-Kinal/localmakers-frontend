@@ -2,6 +2,7 @@ import React from 'react';
 import MyNavbar from '../../components/Navbar';
 import logoNombre from '../../assets/img/Logo.jpeg';
 import './HomePage.css';
+import { MakeWorkOffer } from '../../components/WorkOffer/MakeWorkOffer';
 
 export const HomePage = () => {
   return (
@@ -38,5 +39,11 @@ export const HomePage = () => {
         </div>
       </div>
     </>
+
+export const HomePage = () => {
+  return (
+    <div>
+      <MakeWorkOffer />
+    </div>
   );
 };
