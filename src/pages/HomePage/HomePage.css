@@ -1,0 +1,25 @@
+.container-letters {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .container-information{
+    color: white;
+    display: flex;
+    
+  }
+   .container-information-left{
+   
+    padding-left: 8%;
+    width: 50%; 
+  }
+  .container-information-rigth{
+    color: white;
+    width: 50%;
+    color: #B1AB94;
+  }
+  .container-information-letter{
+    color: white;
+    padding-left: 50px;
+  }

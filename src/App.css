@@ -1,0 +1,24 @@
+.container-App {
+    background-color: black;
+}
+footer {
+    padding: 20px 0; /* Agregar relleno opcional al footer */
+  }
+  
+  .container-letters {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+  }
+  
+  
+  .img-footer {
+    display: flex;
+    justify-content: center; /* Centrar las imágenes horizontalmente */
+  }
+  
+  .img-footer-icon {
+    margin: 0 14px; /* Espacio entre las imágenes */
+    width: 40px; /* Tamaño de las imágenes */
+    height: 40px;
+    }
