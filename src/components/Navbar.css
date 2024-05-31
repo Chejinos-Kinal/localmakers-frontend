@@ -19,7 +19,7 @@
 }
 
 .container-Navbar {
-    background-color: black;
+    background-color: #111827;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -29,7 +29,7 @@
 
 .background-Navbar {
     background-color: #6C7C74;
-    height: 100px;
+    height: 90px;
     padding: 0; /* Elimina el padding */
 }
 
