@@ -71,7 +71,7 @@ const MyNavbar = () => {
                     <li className="nav-item">
                       <a
                         href="/MakeWorkOffer"
-                        className="px-5 py-2 flex items-center  text-white  "
+                        className="px-5 py-1 flex items-center  text-white  "
                       >
                         Ofertas de trabajo
                       </a>
