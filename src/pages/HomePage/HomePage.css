@@ -2,11 +2,13 @@
     text-align: center;
     color: white;
     font-weight: bold;
+    font-size: 1.5em  ;
   }
   
   .container-information{
     color: white;
     display: flex;
+    
     
   }
    .container-information-left{
@@ -15,11 +17,16 @@
     width: 50%; 
   }
   .container-information-rigth{
+    border-color: white ;
+    border-style: solid;
+    border-width: 1px;
+
     color: white;
     width: 50%;
     color: #B1AB94;
   }
   .container-information-letter{
+    
     color: white;
     padding-left: 50px;
   }

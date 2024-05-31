@@ -8,12 +8,13 @@
     border-bottom-right-radius: 0;
     width: 100%; /* Asegúrate de que los elementos ocupen todo el ancho del contenedor */
     box-sizing: border-box;
-    margin-left: 5%;
+    margin-left: 1.5%;
+    background-color:#6C7C74 ;
 }
 
 .nav-item:hover {
     transform: scale(1.1);
-    background-color: #6C7C74;
+    background-color: #3c8464;
     color: black; /* Cambia el color del texto al hacer hover */
 }
 

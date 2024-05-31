@@ -7,12 +7,12 @@ export const HomePage = () => {
   return (
     <>
       <MyNavbar />
+      <br />
+      <br />
       <div className="container-letters">
         <h1>CONOCE MÁS SOBRE NOSOTROS</h1>
-        <br />
       </div>
       <div className="container-information">
-        <br />
         <div className="container-information-left">
           <img src={logoNombre} alt="" />
         </div>

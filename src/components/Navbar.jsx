@@ -71,7 +71,7 @@ const MyNavbar = () => {
                     <li className="nav-item">
                       <a
                         href="/Hotel/CardHotel"
-                        className="px-3 py-2 flex items-center text-white  "
+                        className="px-3 py-2 flex items-center  text-white  "
                       >
                         Hoteles
                       </a>
