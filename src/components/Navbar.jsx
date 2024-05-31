@@ -79,7 +79,7 @@ const MyNavbar = () => {
                   )}
                   <li className="nav-item">
                     <a
-                      href="#"
+                      href="/Raiting"
                       className="px-3 py-2 flex items-center text-white  "
                     >
                       Servicios

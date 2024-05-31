@@ -38,12 +38,7 @@ export const HomePage = () => {
           </p>
         </div>
       </div>
-    </>
-
-export const HomePage = () => {
-  return (
-    <div>
       <MakeWorkOffer />
-    </div>
+    </>
   );
 };
