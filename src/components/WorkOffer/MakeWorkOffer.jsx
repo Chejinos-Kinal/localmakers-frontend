@@ -1,12 +1,14 @@
 import React from 'react';
 
-export const input = () => {
+import workOffer from '../../assets/workoffer.jpeg';
+import logo from '../../assets/logo.jpg';
+export const MakeWorkOffer = () => {
   return (
     <div className="bg-gray-900 text-white min-h-screen flex items-center justify-center">
       <div className="w-full max-w-2xl bg-gray-800 p-8 rounded-lg shadow-lg">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">Oferta de Trabajo</h1>
-          <img src="logo.png" alt="Local Makers Logo" className="h-12" />
+          <img src={logo} alt="Local Makers Logo" className="h-12" />
         </div>
         <form>
           <div className="mb-4">
@@ -75,7 +77,7 @@ export const input = () => {
         </form>
       </div>
       <div className="hidden md:block">
-        <img src="side-image.jpg" alt="Side Image" className="h-full" />
+        <img src={workOffer} alt="Side Image" className="h-full" />
       </div>
     </div>
   );
