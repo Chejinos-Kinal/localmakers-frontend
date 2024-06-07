@@ -1,42 +1,86 @@
 import React, { useEffect, useState } from 'react';
 import MyNavbar from '../../components/Navbar';
 import logoNombre from '../../assets/img/LogoSinFondo.png';
+import logo from '../../assets/img/Logo.jpeg';
 import './HomePage.css';
 import { MakeWorkOffer } from '../../components/WorkOffer/MakeWorkOffer';
 import { getProfessionRequest } from '../../services/profession.service';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { getUserProfession } from '../../services/user.service';
 
 export const HomePage = () => {
-  const [professions, setProfession] = useState([]);
+  const [userProfession, setUserProfession] = useState([]);
+
   useEffect(() => {
-    getProfessionRequest().then((response) => {
-      setProfession(response.data.foundedProfessions);
+    getUserProfession().then((response) => {
+      setUserProfession(response.data.foundedProf);
     });
   }, []);
-
-  console.log(professions);
+  console.log(userProfession);
 
   return (
     <>
       <MyNavbar />
-      {
-        <div className="carousel-container">
-          <Slider autoplay={true} autoplaySpeed={2000}>
-            {' '}
-            {professions.map((profession) => (
-              <div key={profession._id}>
+      <br />
+      <br />
+      <br />
+      {userProfession.map((user) => (
+        <div className="ml-10">
+          <div className="flex flex-row max-w-md w-full">
+            <div className="relative bg-white rounded-lg shadow-lg w-full">
+              <div className="relative bg-black p-4 rounded-t-lg">
+                <div className="flex p-4 font-mono">
+                  <div className="flex-auto pl-6">
+                    <div className="relative flex flex-wrap items-baseline pb-6">
+                      <h1 className="relative w-full flex-none mb-2 text-2xl font-semibold text-white">
+                        {user.name} {user.surname}
+                      </h1>
+                      <div className="relative uppercase text-white"></div>
+                      <div className="relative uppercase text-teal-400 ml-3">
+                        {user.profession[0].name}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex bg-white ">
                 <img
-                  src={profession.image}
-                  alt={`Imagen ${profession.name}`}
-                  className="carousel-image img-carousel"
+                  src={user.profilePicture}
+                  alt=""
+                  className="absolute  right-4 top-4 w-50 h-24 object-cover rounded-lg z-10"
+                  loading="lazy"
                 />
               </div>
-            ))}
-          </Slider>
+
+              <div className="bg-white p-4 rounded-b-lg">
+                <div className="flex items-baseline my-6">
+                  <div className="space-x-3 flex text-sm font-medium">
+                    {user.description}
+                  </div>
+                </div>
+
+                <p className="text-xs leading-6 text-slate-500">
+                  Tel: {user.phone} | Email: {user.email}
+                </p>
+                <br />
+                <div className="flex space-x-2 mb-4 text-sm font-medium">
+                  <div className="flex space-x-4">
+                    <button
+                      className="px-6 h-12 uppercase font-semibold tracking-wider border-2 border-black bg-teal-400 text-black"
+                      type="submit"
+                    >
+                      Información
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      }
+      ))}
+
       <br />
       <br />
       <div className="container-letters">

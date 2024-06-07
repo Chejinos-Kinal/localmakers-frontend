@@ -50,14 +50,6 @@ const MyNavbar = () => {
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
               {isLoggedIn ? (
                 <>
-                  <li className="nav-item">
-                    <a
-                      href="/"
-                      className="px-3 py-2 flex items-center text-white "
-                    >
-                      Inicio
-                    </a>
-                  </li>
                   {userRole === 'ADMIN_APP' ? (
                     <li className="nav-item">
                       <a
