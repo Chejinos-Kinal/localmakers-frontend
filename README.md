@@ -1,1 +1,0 @@
-# LocalMaker-ReactNative
