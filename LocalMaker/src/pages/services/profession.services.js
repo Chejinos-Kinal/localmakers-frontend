@@ -6,7 +6,7 @@ const apiClient = axios.create({
 })
  export const getUserProfessionRequest = async()  =>{
     try {
-        return await apiClient.post('/user/getProf')
+        return await apiClient.get('/user/getProf')
     } catch (err) {
         return {
             error: true,

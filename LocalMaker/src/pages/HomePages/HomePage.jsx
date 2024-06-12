@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import Navbar from '../../Components/Navbar';
+import { getUserProfessionRequest } from '../services/profession.services';
 
 
 const { width } = Dimensions.get('window');
 
 const HomePage = () => {
+    const [userprofession, setUserProfession] = useState([])
+    
+    useEffect(() => {
+        getUserProfessionRequest() 
+          .then((response) => {
+            setUserProfession(response.data.foundedProf);
+          })
+          .catch((error) => {
+            console.error('Error fetching Profession:', error);
+          });
+      }, []);
+   
+ console.log(userprofession)
 
  
   
