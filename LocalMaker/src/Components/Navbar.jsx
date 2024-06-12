@@ -5,12 +5,13 @@ import { Link } from 'react-router-native';
 const Navbar = () => {
   return (
     <View style={styles.navbarContainer}>
-  
-        <Image source={require('../img/LogoSinNombreSinFondo.png')} style={styles.navImage} />
- 
-        <Image source={require('../img/User.png')} style={styles.navImage} />
-  
-    </View>
+    <Link to="/" component={TouchableOpacity} style={styles.navItem}>
+      <Image source={require('../img/LogoSinNombreSinFondo.png')} style={styles.navImage} />
+    </Link>
+    <Link to="/informationProfession" component={TouchableOpacity} style={styles.navItem}>
+      <Image source={require('../img/User.png')} style={styles.navImage} />
+    </Link>
+  </View>
   );
 };
 
