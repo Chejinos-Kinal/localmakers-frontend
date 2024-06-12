@@ -1,24 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
-import { getUserProfessionRequest } from '../../services/profession.services';
+import Navbar from '../../Components/Navbar';
+
 
 const { width } = Dimensions.get('window');
 
 const HomePage = () => {
-    const [userprofession, setUserProfession] = useState([])
-    
-    useEffect(()=>{
-        getUserProfessionRequest()
-        .then(response)
-          setUserProfession(response.data)
-    },[])
-   
+
  
   
   return (
+    <>
+    <Navbar/>
     <ScrollView contentContainerStyle={styles.container}>
-        
-        
       <View style={styles.card}>
         <View style={styles.cardHeader}>
           <View style={styles.cardHeaderContent}>
@@ -56,6 +50,7 @@ const HomePage = () => {
         </View>
       </View>
     </ScrollView>
+    </>
   );
 };
 
