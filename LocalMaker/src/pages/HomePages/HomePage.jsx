@@ -1,71 +1,87 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
 import Navbar from '../../Components/Navbar';
-import { getUserProfessionRequest } from '../services/profession.services';
-
+import { getUserProfessionRequest, getProfessionRequest } from '../services/profession.services';
 
 const { width } = Dimensions.get('window');
 
 const HomePage = () => {
-    const [userprofession, setUserProfession] = useState([])
+    const [userProfession, setUserProfession] = useState([]);
+    const [professions, setProfessions] = useState([]);
     
     useEffect(() => {
-        getUserProfessionRequest() 
+        // Obtener profesiones de los usuarios
+        getUserProfessionRequest()
           .then((response) => {
             setUserProfession(response.data.foundedProf);
           })
           .catch((error) => {
             console.error('Error fetching Profession:', error);
           });
-      }, []);
+
+        // Obtener la lista de todas las profesiones
+        getProfessionRequest()
+          .then((response) => {
+            setProfessions(response.data.professions);
+          })
+          .catch((error) => {
+            console.error('Error fetching professions:', error);
+          });
+    }, []);
    
- console.log(userprofession)
+    // Función para obtener el nombre de la profesión por ID
+    const getProfessionNameById = (id) => {
+        if (!Array.isArray(professions)) return 'Desconocida';
+        const profession = professions.find(prof => prof._id === id);
+        return profession ? profession.name : 'Desconocida';
+    };
 
- 
-  
-  return (
-    <>
-    <Navbar/>
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.card}>
-        <View style={styles.cardHeader}>
-          <View style={styles.cardHeaderContent}>
-            <Text style={styles.cardTitle}>Retro Shoe</Text>
-            <Text style={styles.cardPrice}>$8</Text>
-            <Text style={styles.cardStock}>In stock</Text>
-          </View>
-        </View>
-        <View style={styles.cardBody}>
-          <Text style={styles.cardText}>Aquí las profesiones</Text>
-          <TouchableOpacity style={styles.cardButton}>
-            <Text style={styles.cardButtonText}>Información</Text>
-          </TouchableOpacity>
-          <Text style={styles.cardFooterText}>Free shipping on all continental US orders.</Text>
-        </View>
-      </View>
-
-      <View style={styles.containerLetters}>
-        <Text style={styles.heading}>CONOCE MÁS SOBRE NOSOTROS</Text>
-      </View>
-      <View style={styles.containerInformation}>
-        <View style={styles.containerInformationLeft}></View>
-        <View style={styles.containerInformationRight}>
-          <Text style={styles.subheading}>VISIÓN:</Text>
-          <Text style={styles.text}>
-            Crear un entorno en el cual las personas no sufran por problemas de
-            empleo, convirtiendo a las personas en emprendedores independientes.
-          </Text>
-          <Text style={styles.subheading}>MISIÓN</Text>
-          <Text style={styles.text}>
-            Crear una aplicación en la cual podamos obtener un empleo para el
-            cual todas las personas puedan obtener un empleo o tareas a cambio
-            de dinero.
-          </Text>
-        </View>
-      </View>
-    </ScrollView>
-    </>
-  );
+    return (
+        <>
+        <Navbar/>
+        <ScrollView contentContainerStyle={styles.container}>
+            {userProfession.map((professional, index) => (
+                <View key={index} style={styles.card}>
+                    <View style={styles.cardHeader}>
+                        <View style={styles.cardHeaderContent}>
+                            <Text style={styles.cardTitle}>{professional.name} {professional.surname}</Text>
+                            <Image source={{ uri: professional.profilePicture }} style={styles.profilePicture} />
+                        </View>
+                        <Text style={styles.cardStock}>
+                            Profesiones: {professional.profession.map(profId => getProfessionNameById(profId)).join(', ')}
+                        </Text>
+                    </View>
+                    <View style={styles.cardBody}>
+                        <Text style={styles.cardText}>{professional.description}</Text>
+                        <TouchableOpacity style={styles.cardButton}>
+                            <Text style={styles.cardButtonText}>Información</Text>
+                        </TouchableOpacity>
+                        <Text style={styles.cardFooterText}>TEL: {professional.phone} | Email: {professional.email}</Text>
+                    </View>
+                </View>
+            ))}
+            <View style={styles.containerLetters}>
+                <Text style={styles.heading}>CONOCE MÁS SOBRE NOSOTROS</Text>
+            </View>
+            <View style={styles.containerInformation}>
+                <View style={styles.containerInformationLeft}></View>
+                <View style={styles.containerInformationRight}>
+                    <Text style={styles.subheading}>VISIÓN:</Text>
+                    <Text style={styles.text}>
+                        Crear un entorno en el cual las personas no sufran por problemas de
+                        empleo, convirtiendo a las personas en emprendedores independientes.
+                    </Text>
+                    <Text style={styles.subheading}>MISIÓN</Text>
+                    <Text style={styles.text}>
+                        Crear una aplicación en la cual podamos obtener un empleo para el
+                        cual todas las personas puedan obtener un empleo o tareas a cambio
+                        de dinero.
+                    </Text>
+                </View>
+            </View>
+        </ScrollView>
+        </>
+    );
 };
 
 const styles = StyleSheet.create({
@@ -130,6 +146,12 @@ const styles = StyleSheet.create({
   cardHeaderContent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  profilePicture: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
   },
   cardTitle: {
     fontSize: 20,
@@ -149,7 +171,7 @@ const styles = StyleSheet.create({
   },
   cardText: {
     fontSize: 16,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   cardButton: {
     backgroundColor: '#38b2ac',

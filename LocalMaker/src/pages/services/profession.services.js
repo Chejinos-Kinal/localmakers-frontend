@@ -14,3 +14,14 @@ const apiClient = axios.create({
         }
     }
 }
+
+export const getProfessionRequest = async()=>{
+    try {
+        return await apiClient.get('/profession/getProfession')
+    } catch (err) {
+        return {
+            error: true,
+            err
+        }
+    }
+}
