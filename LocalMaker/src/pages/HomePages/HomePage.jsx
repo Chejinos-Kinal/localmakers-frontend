@@ -18,23 +18,9 @@ const HomePage = () => {
           .catch((error) => {
             console.error('Error fetching Profession:', error);
           });
-
-        // Obtener la lista de todas las profesiones
-        getProfessionRequest()
-          .then((response) => {
-            setProfessions(response.data.professions);
-          })
-          .catch((error) => {
-            console.error('Error fetching professions:', error);
-          });
     }, []);
    
-    // Función para obtener el nombre de la profesión por ID
-    const getProfessionNameById = (id) => {
-        if (!Array.isArray(professions)) return 'Desconocida';
-        const profession = professions.find(prof => prof._id === id);
-        return profession ? profession.name : 'Desconocida';
-    };
+  
 
     return (
         <>
@@ -48,7 +34,7 @@ const HomePage = () => {
                             <Image source={{ uri: professional.profilePicture }} style={styles.profilePicture} />
                         </View>
                         <Text style={styles.cardStock}>
-                            Profesiones: {professional.profession.map(profId => getProfessionNameById(profId)).join(', ')}
+                            Profesiones:
                         </Text>
                     </View>
                     <View style={styles.cardBody}>
