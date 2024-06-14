@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
 import Navbar from '../../Components/Navbar';
-import { getUserProfessionRequest, getProfessionRequest } from '../services/profession.services';
+import { getUserProfessionRequest, getProfessionRequest } from '../../services/profession.services';
 
 const { width } = Dimensions.get('window');
 

@@ -8,7 +8,9 @@ import Login from './src/pages/UserPage/Login';
 const Router = () => {
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/*" element={<Login />} />
+      <Route path='/HomePage' element={<HomePage/>}/>
+
       <Route path="/informationProfession" element={<ProfessionalInformation />} />
 
     </Routes>
