@@ -1,60 +1,46 @@
-import React from 'react';
-import { Formik, useField } from 'formik';
-import { Text, View, Button, StyleSheet } from 'react-native';
-import StyledTextInput from './StyleInput';
+import React, { useState } from 'react';
+import { Formik } from 'formik';
+import { Text, View, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { loginValidationSchema } from '../../validationSchemas/login';
 import { loginRequest } from '../../services/user.services';
-import { useNavigate } from 'react-router-native'; // Importa useHistory desde react-router-native
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useNavigate } from 'react-router-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Input from '../../Components/Input';
 
 const Login = () => {
+  const [errorMessage, setErrorMessage] = useState('');
   const initialValues = {
     username: '',
     password: ''
   };
-
   const styles = StyleSheet.create({
     form: {
       margin: 12
     },
-    error: {
+    errorText: {
       color: 'red',
-      fontSize: 12,
-      marginBottom: 20,
-      marginTop: -5
-    }
+      marginBottom: 10,
+    },
+    registerText: {
+      marginTop: 10,
+      color: 'blue',
+    },
   });
 
-  const history = useNavigate(); // Usa useHistory para la navegación
-
-  const FormikInputValue = ({ name, ...props }) => {
-    const [field, meta, helpers] = useField(name);
-    return (
-      <>
-        <StyledTextInput
-          error={meta.error}
-          value={field.value}
-          onChangeText={value => helpers.setValue(value)}
-          {...props}
-        />
-        {meta.error && <Text style={styles.error}>{meta.error}</Text>}
-      </>
-    );
-  };
-
+  const navigate = useNavigate();
   const login = async (values) => {
     try {
       const response = await loginRequest(values);
-     
+
       if (response && response.data && response.data.token) {
         await AsyncStorage.setItem('token', response.data.token);
-      
-        history('/HomePage'); 
+        navigate('/HomePage');
       } else {
-        console.error('No se recibió un token válido en la respuesta');
+        setErrorMessage('Usuario o contraseña inválido');
       }
     } catch (error) {
       console.error('Error general al intentar iniciar sesión', error);
+      setErrorMessage('Usuario o contraseña inválido');
     }
   };
 
@@ -66,16 +52,20 @@ const Login = () => {
     >
       {({ handleSubmit }) => (
         <View style={styles.form}>
-          <FormikInputValue
-            placeholder='Username'
+          {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
+          <Input
+            placeholder='Usuario'
             name='username'
           />
-          <FormikInputValue
-            placeholder='Password'
+          <Input
+            placeholder='Contraseña'
             name='password'
             secureTextEntry
           />
           <Button onPress={handleSubmit} title='Log In' />
+          <TouchableOpacity onPress={() => navigate('/Register')}>
+            <Text style={styles.registerText}>No tienes cuenta? Regístrate</Text>
+          </TouchableOpacity>
         </View>
       )}
     </Formik>

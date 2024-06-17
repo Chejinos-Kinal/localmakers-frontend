@@ -1,27 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
-import Navbar from '../../Components/Navbar';
-import { getUserProfessionRequest, getProfessionRequest } from '../../services/profession.services';
+import React, { useEffect, useState } from 'react'
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native'
+import Navbar from '../../Components/Navbar'
+import { getUserProfessionRequest } from '../../services/profession.services'
+import { useNavigate } from 'react-router-native'
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get('window')
 
 const HomePage = () => {
-    const [userProfession, setUserProfession] = useState([]);
-    const [professions, setProfessions] = useState([]);
+    const [userProfession, setUserProfession] = useState([])
+    const navigate = useNavigate();
     
     useEffect(() => {
-        // Obtener profesiones de los usuarios
+  
         getUserProfessionRequest()
           .then((response) => {
-            setUserProfession(response.data.foundedProf);
+            setUserProfession(response.data.foundedProf)
           })
           .catch((error) => {
-            console.error('Error fetching Profession:', error);
+            console.error('Error fetching Profession:', error)
           });
     }, []);
    
-  
-
+    const handleMoreInfoPress = (professional) => {
+      navigate('/informationProfession', { state: { professional } })
+  }
     return (
         <>
         <Navbar/>
@@ -39,7 +41,7 @@ const HomePage = () => {
                     </View>
                     <View style={styles.cardBody}>
                         <Text style={styles.cardText}>{professional.description}</Text>
-                        <TouchableOpacity style={styles.cardButton}>
+                        <TouchableOpacity style={styles.cardButton} onPress={() => handleMoreInfoPress(professional)}>
                             <Text style={styles.cardButtonText}>Información</Text>
                         </TouchableOpacity>
                         <Text style={styles.cardFooterText}>TEL: {professional.phone} | Email: {professional.email}</Text>
@@ -74,7 +76,7 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 20,
-    backgroundColor: '#132e5c',
+    backgroundColor: '#1a202c',
     width: '100%',
     minHeight: '100%',
   },
@@ -175,6 +177,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#718096',
   },
-});
+})
 
-export default HomePage;
+export default HomePage

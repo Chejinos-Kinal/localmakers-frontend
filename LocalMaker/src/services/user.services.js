@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-    baseURL: 'http:192.168.0.10:2880',
+    baseURL: 'https://localmakers-backend.vercel.app',
     timeout: 5000
 })
 
@@ -9,6 +9,17 @@ const apiClient = axios.create({
 export const loginRequest = async (data) => {
     try {
         return await apiClient.post('/user/login', data)
+    } catch (err) {
+        return {
+            error: true,
+            err
+        }
+    }
+}
+
+export const registerRequest = async (data) => {
+    try {
+        return await apiClient.post('/user/newUser', data)
     } catch (err) {
         return {
             error: true,

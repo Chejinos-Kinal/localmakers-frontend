@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-    baseURL: 'http:192.168.0.10:2880',
+    baseURL: 'https://localmakers-backend.vercel.app',
     timeout: 5000
 })
  export const getUserProfessionRequest = async()  =>{
