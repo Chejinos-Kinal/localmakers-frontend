@@ -1,75 +1,102 @@
-import React, { useEffect, useState } from 'react'
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native'
-import Navbar from '../../Components/Navbar'
-import { getUserProfessionRequest } from '../../services/profession.services'
-import { useNavigate } from 'react-router-native'
+import React, { useEffect, useState } from 'react';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
+import Navbar from '../../Components/Navbar';
+import { getUserProfessionRequest } from '../../services/profession.services';
+import { getProfessionRequest } from '../../services/profession.services'; // Importa tu función de obtener profesiones
+import { useNavigate } from 'react-router-native';
 
-const { width } = Dimensions.get('window')
+const { width } = Dimensions.get('window');
 
 const HomePage = () => {
-    const [userProfession, setUserProfession] = useState([])
-    const navigate = useNavigate();
-    
-    useEffect(() => {
-  
-        getUserProfessionRequest()
-          .then((response) => {
-            setUserProfession(response.data.foundedProf)
-          })
-          .catch((error) => {
-            console.error('Error fetching Profession:', error)
-          });
-    }, []);
-   
-    const handleMoreInfoPress = (professional) => {
-      navigate('/informationProfession', { state: { professional } })
-  }
-    return (
-        <>
-        <Navbar/>
-        <ScrollView contentContainerStyle={styles.container}>
-            {userProfession.map((professional, index) => (
-                <View key={index} style={styles.card}>
-                    <View style={styles.cardHeader}>
-                        <View style={styles.cardHeaderContent}>
-                            <Text style={styles.cardTitle}>{professional.name} {professional.surname}</Text>
-                            <Image source={{ uri: professional.profilePicture }} style={styles.profilePicture} />
-                        </View>
-                        <Text style={styles.cardStock}>
-                            Profesiones:
-                        </Text>
-                    </View>
-                    <View style={styles.cardBody}>
-                        <Text style={styles.cardText}>{professional.description}</Text>
-                        <TouchableOpacity style={styles.cardButton} onPress={() => handleMoreInfoPress(professional)}>
-                            <Text style={styles.cardButtonText}>Información</Text>
-                        </TouchableOpacity>
-                        <Text style={styles.cardFooterText}>TEL: {professional.phone} | Email: {professional.email}</Text>
-                    </View>
-                </View>
-            ))}
-            <View style={styles.containerLetters}>
-                <Text style={styles.heading}>CONOCE MÁS SOBRE NOSOTROS</Text>
+  const [userProfession, setUserProfession] = useState([]);
+  const [professions, setProfessions] = useState([]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Función para obtener profesiones
+    const fetchProfessions = async () => {
+      try {
+        const professionsResponse = await getProfessionRequest();
+        setProfessions(professionsResponse); // Almacena las profesiones en el estado
+      } catch (error) {
+        console.error('Error fetching professions:', error);
+      }
+    };
+
+    fetchProfessions(); // Llama a la función para obtener profesiones al cargar la página
+  }, []);
+
+  useEffect(() => {
+    // Función para obtener usuarios con profesiones
+    const fetchUserProfessions = async () => {
+      try {
+        const response = await getUserProfessionRequest();
+        setUserProfession(response.data.foundedProf);
+      } catch (error) {
+        console.error('Error fetching User Professions:', error);
+      }
+    };
+
+    fetchUserProfessions(); // Llama a la función para obtener usuarios con profesiones al cargar la página
+  }, []);
+
+  const handleMoreInfoPress = (professional) => {
+    navigate('/informationProfession', { state: { professional } });
+  };
+
+  return (
+    <>
+      <Navbar />
+      <ScrollView contentContainerStyle={styles.container}>
+        {userProfession.map((professional, index) => (
+          <View key={index} style={styles.card}>
+            <View style={styles.cardHeader}>
+              <View style={styles.cardHeaderContent}>
+                <Text style={styles.cardTitle}>{professional.name} {professional.surname}</Text>
+                <Image source={{ uri: professional.profilePicture }} style={styles.profilePicture} />
+              </View>
+              <Text style={styles.cardStock}>
+                Profesiones:
+              </Text>
+              {/* Mostrar nombres de profesiones en lugar de IDs */}
+              {professional.profession && professional.profession.map((profId, i) => (
+                <Text key={i} style={styles.cardStock}>
+                  {professions((prof) => prof._id === profId).name}
+                </Text>
+              ))}
             </View>
-            <View style={styles.containerInformation}>
-                <View style={styles.containerInformationLeft}></View>
-                <View style={styles.containerInformationRight}>
-                    <Text style={styles.subheading}>VISIÓN:</Text>
-                    <Text style={styles.text}>
-                        Crear un entorno en el cual las personas no sufran por problemas de
-                        empleo, convirtiendo a las personas en emprendedores independientes.
-                    </Text>
-                    <Text style={styles.subheading}>MISIÓN</Text>
-                    <Text style={styles.text}>
-                        Crear una aplicación en la cual podamos obtener un empleo para el
-                        cual todas las personas puedan obtener un empleo o tareas a cambio
-                        de dinero.
-                    </Text>
-                </View>
+            <View style={styles.cardBody}>
+              <Text style={styles.cardText}>{professional.description}</Text>
+              <TouchableOpacity style={styles.cardButton} onPress={() => handleMoreInfoPress(professional)}>
+                <Text style={styles.cardButtonText}>Información</Text>
+              </TouchableOpacity>
+              <Text style={styles.cardFooterText}>TEL: {professional.phone} | Email: {professional.email}</Text>
             </View>
-        </ScrollView>
-        </>
-    );
+          </View>
+        ))}
+        <View style={styles.containerLetters}>
+          <Text style={styles.heading}>CONOCE MÁS SOBRE NOSOTROS</Text>
+        </View>
+        <View style={styles.containerInformation}>
+          <View style={styles.containerInformationLeft}></View>
+          <View style={styles.containerInformationRight}>
+            <Text style={styles.subheading}>VISIÓN:</Text>
+            <Text style={styles.text}>
+              Crear un entorno en el cual las personas no sufran por problemas de
+              empleo, convirtiendo a las personas en emprendedores independientes.
+            </Text>
+            <Text style={styles.subheading}>MISIÓN</Text>
+            <Text style={styles.text}>
+              Crear una aplicación en la cual podamos obtener un empleo para el
+              cual todas las personas puedan obtener un empleo o tareas a cambio
+              de dinero.
+            </Text>
+          </View>
+        </View>
+      </ScrollView>
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -177,6 +204,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#718096',
   },
-})
+});
 
-export default HomePage
+export default HomePage;

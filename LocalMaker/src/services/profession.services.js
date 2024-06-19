@@ -14,14 +14,13 @@ const apiClient = axios.create({
         }
     }
 }
-
-export const getProfessionRequest = async()=>{
+export const getProfessionRequest = async () => {
     try {
-        return await apiClient.get('/profession/getProfession')
+      const response = await apiClient.get('/profession/getProfession');
+      return response.data;
     } catch (err) {
-        return {
-            error: true,
-            err
-        }
+      console.error('Error fetching professions:', err);
+      return { error: true, err };
     }
-}
+  };
+  
