@@ -60,11 +60,7 @@ const HomePage = () => {
                 Profesiones:
               </Text>
               {/* Mostrar nombres de profesiones en lugar de IDs */}
-              {professional.profession && professional.profession.map((profId, i) => (
-                <Text key={i} style={styles.cardStock}>
-                  {professions((prof) => prof._id === profId).name}
-                </Text>
-              ))}
+             
             </View>
             <View style={styles.cardBody}>
               <Text style={styles.cardText}>{professional.description}</Text>

@@ -23,7 +23,7 @@ const Navbar = () => {
       {showSidebar && (
         <Text></Text>
       )}
-      <Link to="/informationProfession" component={TouchableOpacity} style={styles.navItem}>
+      <Link to="/InformationUser" component={TouchableOpacity} style={styles.navItem}>
         <Image source={require('../img/User.png')} style={styles.navImage} />
       </Link>
     </View>

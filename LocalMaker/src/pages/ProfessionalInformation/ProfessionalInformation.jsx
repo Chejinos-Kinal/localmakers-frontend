@@ -7,7 +7,7 @@ const ProfessionalInformation = () => {
     const { professional } = location.state
     const navigation = useNavigate()
     const handleMakeWorkOffer = ()=>{
-        navigation('/MakeWorkOffer')
+        navigation('/MakeWorkOffer' ,{state: {professional}})
     }
 
     return (

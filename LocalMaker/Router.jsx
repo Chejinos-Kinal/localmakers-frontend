@@ -5,6 +5,7 @@ import ProfessionalInformation from './src/pages/ProfessionalInformation/Profess
 import Login from './src/pages/UserPage/Login';
 import Register from './src/pages/UserPage/Register';
 import MakeWorkOffer from './src/pages/WorkOffer/MakeWorkOffer';
+import Information from './src/pages/UserPage/Information';
 
 
 const Router = () => {
@@ -15,6 +16,7 @@ const Router = () => {
       <Route path='/Register' element={<Register />} />
       <Route path="/informationProfession" element={<ProfessionalInformation />} />
       <Route path='/MakeWorkOffer' element={<MakeWorkOffer/>}  />
+      <Route path='/InformationUser' element={<Information/>}/>
 
     </Routes>
   );
