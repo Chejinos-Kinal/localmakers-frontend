@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 const apiClient = axios.create({
@@ -6,6 +7,16 @@ const apiClient = axios.create({
 })
 
 
+apiClient.interceptors.request.use(
+    (config) => {
+      const token = AsyncStorage.getItem('token');
+      if (token) {
+        config.headers.token = token;
+      }
+      return config;
+    },
+    (err) => Promise.reject(err),
+  );
 export const loginRequest = async (data) => {
     try {
         return await apiClient.post('/user/login', data)
@@ -16,6 +27,7 @@ export const loginRequest = async (data) => {
         }
     }
 }
+
 
 export const registerRequest = async (data) => {
     try {

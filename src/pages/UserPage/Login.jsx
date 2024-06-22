@@ -67,6 +67,7 @@ const Login = () => {
 
       if (response && response.data && response.data.token) {
         await AsyncStorage.setItem('token', response.data.token);
+   
         navigate('/HomePage');
       } else {
         setErrorMessage('Usuario o contraseña inválido');

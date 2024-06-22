@@ -6,12 +6,14 @@ import Login from './src/pages/UserPage/Login';
 import Register from './src/pages/UserPage/Register';
 import MakeWorkOffer from './src/pages/WorkOffer/MakeWorkOffer';
 import Information from './src/pages/UserPage/Information';
+import Review from './src/pages/Review/Review';
 
 
 const Router = () => {
   return (
     <Routes>
       <Route path="/*" element={<Login />} />
+      <Route path='/Review' element={<Review/>} />
       <Route path='/HomePage' element={<HomePage />} />
       <Route path='/Register' element={<Register />} />
       <Route path="/informationProfession" element={<ProfessionalInformation />} />

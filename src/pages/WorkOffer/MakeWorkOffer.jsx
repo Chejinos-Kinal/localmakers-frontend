@@ -1,21 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Navbar from '../../Components/Navbar';
-import { useLocation } from 'react-router-native';
+import { useLocation, useNavigate } from 'react-router-native';
 import Input from '../../Components/Input';
 import { Formik } from 'formik';
+import { createWorkOffertRequest } from '../../services/workOffer.services';
 
 const MakeWorkOffer = () => {
   const location = useLocation();
   const initialValues = {
     title: '',
     problemDescription: '',
-    professional: '',
-    workSite: ''
+    workSite: '' 
   };
+  const navigate = useNavigate();
   const { professional } = location.state;
-  initialValues.professional = professional._id;
+
+  const createWorkOffer = async (values) => {
+    const idProf = professional._id;
+    await createWorkOffertRequest(values, idProf);
+  
+
+  };
 
   return (
     <>
@@ -28,7 +35,7 @@ const MakeWorkOffer = () => {
           </View>
           <Formik
             initialValues={initialValues}
-            onSubmit={values => console.log(values)}
+            onSubmit={(values) => createWorkOffer(values)}
           >
             {({ handleSubmit, setFieldValue, values }) => (
               <>
@@ -61,6 +68,7 @@ const MakeWorkOffer = () => {
                     onValueChange={(itemValue) => setFieldValue('workSite', itemValue)}
                     style={styles.picker}
                   >
+                    <Picker.Item label="" value="Localidad Del Profesional" />
                     <Picker.Item label="Zona 1" value="zona-1" />
                     <Picker.Item label="Zona 2" value="zona-2" />
                     <Picker.Item label="Zona 3" value="zona-3" />

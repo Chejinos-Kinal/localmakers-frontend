@@ -2,33 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
 import Navbar from '../../Components/Navbar';
 import { getUserProfessionRequest } from '../../services/profession.services';
-import { getProfessionRequest } from '../../services/profession.services'; // Importa tu función de obtener profesiones
 import { useNavigate } from 'react-router-native';
 
 const { width } = Dimensions.get('window');
 
 const HomePage = () => {
   const [userProfession, setUserProfession] = useState([]);
-  const [professions, setProfessions] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Función para obtener profesiones
-    const fetchProfessions = async () => {
-      try {
-        const professionsResponse = await getProfessionRequest();
-        setProfessions(professionsResponse); // Almacena las profesiones en el estado
-      } catch (error) {
-        console.error('Error fetching professions:', error);
-      }
-    };
-
-    fetchProfessions(); // Llama a la función para obtener profesiones al cargar la página
-  }, []);
-
-  useEffect(() => {
-    // Función para obtener usuarios con profesiones
     const fetchUserProfessions = async () => {
       try {
         const response = await getUserProfessionRequest();
@@ -38,7 +21,7 @@ const HomePage = () => {
       }
     };
 
-    fetchUserProfessions(); // Llama a la función para obtener usuarios con profesiones al cargar la página
+    fetchUserProfessions();
   }, []);
 
   const handleMoreInfoPress = (professional) => {
@@ -49,6 +32,9 @@ const HomePage = () => {
     <>
       <Navbar />
       <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerText}>Oferta de Trabajo</Text>
+        </View>
         {userProfession.map((professional, index) => (
           <View key={index} style={styles.card}>
             <View style={styles.cardHeader}>
@@ -56,11 +42,7 @@ const HomePage = () => {
                 <Text style={styles.cardTitle}>{professional.name} {professional.surname}</Text>
                 <Image source={{ uri: professional.profilePicture }} style={styles.profilePicture} />
               </View>
-              <Text style={styles.cardStock}>
-                Profesiones:
-              </Text>
-              {/* Mostrar nombres de profesiones en lugar de IDs */}
-             
+              <Text style={styles.cardStock}>Profesiones:</Text>
             </View>
             <View style={styles.cardBody}>
               <Text style={styles.cardText}>{professional.description}</Text>
@@ -103,12 +85,22 @@ const styles = StyleSheet.create({
     width: '100%',
     minHeight: '100%',
   },
+  headerContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  headerText: {
+    color: '#81e6d9',
+    fontWeight: 'bold',
+    fontSize: 28,
+  },
   containerLetters: {
+    
     alignItems: 'center',
     marginBottom: 20,
   },
   heading: {
-    color: 'white',
+    color: '#81e6d9',
     fontWeight: 'bold',
     fontSize: 24,
     textAlign: 'center',
@@ -129,13 +121,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: 'white',
+    color: '#81e6d9',
     textAlign: width > 600 ? 'left' : 'center',
   },
   text: {
     fontSize: 16,
     marginBottom: 20,
-    color: 'white',
+    color: '#81e6d9',
     textAlign: width > 600 ? 'left' : 'center',
     paddingHorizontal: width > 600 ? 0 : 20,
   },
@@ -151,7 +143,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   cardHeader: {
-    backgroundColor: 'black',
+    backgroundColor: '#2d3748',
     padding: 20,
   },
   cardHeaderContent: {
@@ -169,13 +161,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
   },
-  cardPrice: {
-    fontSize: 18,
-    color: 'white',
-  },
   cardStock: {
     fontSize: 16,
-    color: '#38b2ac',
+    color: '#A0AEC0',
   },
   cardBody: {
     padding: 20,
@@ -183,16 +171,17 @@ const styles = StyleSheet.create({
   cardText: {
     fontSize: 16,
     marginBottom: 10,
+    color: '#2D3748',
   },
   cardButton: {
-    backgroundColor: '#38b2ac',
+    backgroundColor: '#2B6CB0',
     padding: 10,
     alignItems: 'center',
     borderRadius: 5,
     marginBottom: 10,
   },
   cardButtonText: {
-    color: 'black',
+    color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
   },
