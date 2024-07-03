@@ -24,7 +24,7 @@ const HomePage = () => {
     fetchUserProfessions();
   }, []);
 
-  console.log(userProfession);
+
   
   const handleMoreInfoPress = (professional) => {
     navigate('/informationProfession', { state: { professional } });

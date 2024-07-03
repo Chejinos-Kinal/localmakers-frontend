@@ -20,6 +20,7 @@ const Account = () => {
 
     fetchAccount();
   }, []);
+  console.log(account)
 
   return (
     <>

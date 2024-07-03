@@ -8,6 +8,7 @@ const App = () => {
   return (
     <>
     <StatusBar style='' />
+    
     <NativeRouter>
       <View style={styles.container}>
         <Router />
