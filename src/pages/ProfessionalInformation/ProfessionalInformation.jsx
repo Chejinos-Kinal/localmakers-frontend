@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useLocation } from 'react-router-native';
 import { useNavigate } from 'react-router-native';
+import Navbar from '../../Components/Navbar';
 
 const ProfessionalInformation = () => {
   const location = useLocation();
@@ -13,6 +14,8 @@ const ProfessionalInformation = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <View style={styles.container}>
       <View style={styles.profileContainer}>
         <Image source={{ uri: professional.profilePicture }} style={styles.profilePicture} />
@@ -26,6 +29,7 @@ const ProfessionalInformation = () => {
         <Text style={styles.offerButtonText}>REALIZAR OFERTA DE TRABAJO</Text>
       </TouchableOpacity>
     </View>
+    </>
   );
 };
 

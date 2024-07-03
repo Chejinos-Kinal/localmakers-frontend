@@ -22,35 +22,14 @@ apiClient.interceptors.request.use(
     return Promise.reject(err);
   }
 );
-export const loginRequest = async (data) => {
+
+export const getAccount = async()=>{
     try {
-        return await apiClient.post('/user/login', data)
+        return await apiClient.get('/account/getAccount')
     } catch (err) {
         return {
-            error: true,
-            err
-        }
-    }
-}
-
-
-export const registerRequest = async (data) => {
-    try {
-        return await apiClient.post('/user/newUser', data)
-    } catch (err) {
-        return {
-            error: true,
-            err
-        }
-    }
-}
-export const dataUserRequest = async ()=>{
-    try {
-        return await apiClient.get(`/user/getUserData`)
-    } catch (err) {
-        return{
-            error: true,
-            err
+            err,
+            error: err
         }
     }
 }

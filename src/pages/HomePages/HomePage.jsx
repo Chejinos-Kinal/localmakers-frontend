@@ -24,6 +24,8 @@ const HomePage = () => {
     fetchUserProfessions();
   }, []);
 
+  console.log(userProfession);
+  
   const handleMoreInfoPress = (professional) => {
     navigate('/informationProfession', { state: { professional } });
   };
@@ -43,6 +45,9 @@ const HomePage = () => {
                 <Image source={{ uri: professional.profilePicture }} style={styles.profilePicture} />
               </View>
               <Text style={styles.cardStock}>Profesiones:</Text>
+              {professional.profession.map((prof, i) => (
+                <Text key={i} style={styles.professionName}>{prof.name}</Text>
+              ))}
             </View>
             <View style={styles.cardBody}>
               <Text style={styles.cardText}>{professional.description}</Text>
@@ -95,7 +100,6 @@ const styles = StyleSheet.create({
     fontSize: 28,
   },
   containerLetters: {
-    
     alignItems: 'center',
     marginBottom: 20,
   },
@@ -164,6 +168,10 @@ const styles = StyleSheet.create({
   cardStock: {
     fontSize: 16,
     color: '#A0AEC0',
+  },
+  professionName: {
+    fontSize: 14,
+    color: '#CBD5E0',
   },
   cardBody: {
     padding: 20,

@@ -7,6 +7,8 @@ import Register from './src/pages/UserPage/Register';
 import MakeWorkOffer from './src/pages/WorkOffer/MakeWorkOffer';
 import Information from './src/pages/UserPage/Information';
 import Review from './src/pages/Review/Review';
+import UpdateUser from './src/pages/UserPage/UpdateUser';
+import Account from './src/pages/Account/Account';
 
 
 const Router = () => {
@@ -18,7 +20,7 @@ const Router = () => {
       <Route path='/Register' element={<Register />} />
       <Route path="/informationProfession" element={<ProfessionalInformation />} />
       <Route path='/MakeWorkOffer' element={<MakeWorkOffer/>}  />
-      <Route path='/InformationUser' element={<Information/>}/>
+      <Route path='/InformationUser' element={<Account/>}/>
 
     </Routes>
   );
