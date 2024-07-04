@@ -7,6 +7,7 @@ import Register from './src/pages/UserPage/Register';
 import MakeWorkOffer from './src/pages/WorkOffer/MakeWorkOffer';
 import Information from './src/pages/UserPage/Information';
 import Review from './src/pages/Review/Review';
+import Activate from './src/pages/ProfessionalPage/Activate';
 
 
 const Router = () => {
@@ -19,6 +20,7 @@ const Router = () => {
       <Route path="/informationProfession" element={<ProfessionalInformation />} />
       <Route path='/MakeWorkOffer' element={<MakeWorkOffer/>}  />
       <Route path='/InformationUser' element={<Information/>}/>
+      <Route path='/Activate' element={<Activate/>}/>
 
     </Routes>
   );
