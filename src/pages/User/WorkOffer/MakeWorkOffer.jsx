@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import Navbar from '../../Components/Navbar';
+import Navbar from '../../../Components/Navbar';
 import { useLocation, useNavigate } from 'react-router-native';
-import Input from '../../Components/Input';
+import Input from '../../../Components/Input';
 import { Formik } from 'formik';
-import { createWorkOffertRequest } from '../../services/workOffer.services';
+import { createWorkOffertRequest } from '../../../services/workOffer.services';
 
 const MakeWorkOffer = () => {
   const location = useLocation();
@@ -31,7 +31,7 @@ const MakeWorkOffer = () => {
         <View style={styles.formContainer}>
           <View style={styles.header}>
             <Text style={styles.title}>Oferta de Trabajo</Text>
-            <Image source={require('../../img/LogoSinNombreSinFondo.png')} style={styles.logo} />
+            <Image source={require('../../../img/LogoSinNombreSinFondo.png')} style={styles.logo} />
           </View>
           <Formik
             initialValues={initialValues}

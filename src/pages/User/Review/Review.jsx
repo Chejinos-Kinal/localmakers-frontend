@@ -23,7 +23,7 @@ const Review = () => {
           <View style={styles.main}>
             <Image
               style={styles.tokenImage}
-              source={require('../../img/Logo.jpeg')}
+              source={require('../../../img/Logo.jpeg')}
               alt="NFT"
             />
             <View style={styles.stars}>

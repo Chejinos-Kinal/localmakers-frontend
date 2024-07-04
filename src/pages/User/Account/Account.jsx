@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, Dimensions } from 'react-native';
-import Navbar from '../../Components/Navbar';
-import { getAccount } from '../../services/account.services';
+import Navbar from '../../../Components/Navbar';
+import { getAccount } from '../../../services/account.services';
 
 
 

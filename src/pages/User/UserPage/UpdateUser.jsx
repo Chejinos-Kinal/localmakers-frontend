@@ -1,11 +1,11 @@
 import { Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
-import Input from '../../Components/Input';
-import { registerValidateSchema } from '../../validationSchemas/register';
-import { dataUserRequest, registerRequest } from '../../services/user.services';
+import Input from '../../../Components/Input';
+import { registerValidateSchema } from '../../../validationSchemas/register';
+import { dataUserRequest, registerRequest } from '../../../services/user.services';
 import { useNavigate } from 'react-router-native';
-import Navbar from '../../Components/Navbar';
+import Navbar from '../../../Components/Navbar';
 
 const UpdateUser = () => {
     const [user, setUser] = useState([])

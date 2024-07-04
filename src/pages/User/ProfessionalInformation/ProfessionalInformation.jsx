@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useLocation } from 'react-router-native';
 import { useNavigate } from 'react-router-native';
-import Navbar from '../../Components/Navbar';
-import ChatRoom from '../../Components/ChatRoom'; // Importa el componente de chat
+import Navbar from '../../../Components/Navbar';
+import ChatRoom from '../../../Components/ChatRoom'; // Importa el componente de chat
 
 const ProfessionalInformation = () => {
   const location = useLocation();
@@ -45,13 +45,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#F7FAFC',
+    backgroundColor: '#1a202c',
     alignItems: 'center',
   },
   profileContainer: {
     alignItems: 'center',
     marginBottom: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#2d3748',
     borderRadius: 10,
     padding: 20,
     shadowColor: '#000',
@@ -69,18 +69,18 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#2D3748',
+    color: '#81e6d9',
     marginBottom: 10,
   },
   description: {
     fontSize: 16,
-    color: '#4A5568',
+    color: '#81e6d9',
     marginBottom: 10,
     textAlign: 'center',
   },
   contact: {
     fontSize: 16,
-    color: '#4A5568',
+    color: '#81e6d9',
     marginBottom: 5,
   },
   offerButton: {
