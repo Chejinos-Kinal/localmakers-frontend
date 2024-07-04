@@ -9,6 +9,7 @@ import Information from './src/pages/UserPage/Information';
 import Review from './src/pages/Review/Review';
 import UpdateUser from './src/pages/UserPage/UpdateUser';
 import Account from './src/pages/Account/Account';
+import ChatRoom from './src/Components/ChatRoom';
 
 
 const Router = () => {
@@ -22,6 +23,7 @@ const Router = () => {
       <Route path='/MakeWorkOffer' element={<MakeWorkOffer/>}  />
       <Route path='/InformationUser' element={<UpdateUser/>}/>
       <Route path='/Account' element={<Account/>}/>
+      <Route path='ChatRoom' element={<ChatRoom/>}/>
 
     </Routes>
   );

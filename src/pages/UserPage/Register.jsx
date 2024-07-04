@@ -1,10 +1,11 @@
 import { Formik } from 'formik';
-import React from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { Button, StyleSheet, Text, TouchableOpacity, View, ScrollView, Image } from 'react-native';
 import Input from '../../Components/Input';
 import { registerValidateSchema } from '../../validationSchemas/register';
 import { registerRequest } from '../../services/user.services';
 import { useNavigate } from 'react-router-native';
+import ImagePicker from 'react-native-image-picker';
 
 const Register = () => {
   const initialValues = {
@@ -15,7 +16,7 @@ const Register = () => {
     password: '',
     phone: '',
     locality: '',
-    profilePicture: '',
+    profilePicture: '', // Para almacenar la ruta de la imagen seleccionada
   };
 
   const styles = StyleSheet.create({
@@ -39,7 +40,7 @@ const Register = () => {
       borderWidth: 1,
       borderRadius: 5,
       padding: 10,
-      color: '#fff',
+      color: '#000',
       marginBottom: 15,
     },
     button: {
@@ -47,6 +48,7 @@ const Register = () => {
       padding: 10,
       borderRadius: 5,
       alignItems: 'center',
+      marginTop: 10,
     },
     buttonText: {
       color: '#000',
@@ -68,17 +70,47 @@ const Register = () => {
       marginBottom: 10,
       textAlign: 'center',
     },
+    profileImage: {
+      width: 100,
+      height: 100,
+      borderRadius: 50,
+      marginBottom: 10,
+    },
   });
 
   const navigate = useNavigate();
 
+  const [profileImage, setProfileImage] = useState(null);
+
   const registro = async (values) => {
     try {
-      await registerRequest(values);
+      // Aquí deberías enviar el formulario con la imagen a tu servicio de registro
+      await registerRequest({ ...values, profilePicture: profileImage });
       navigate('/*');
     } catch (error) {
       console.error('Error al registrarse');
     }
+  };
+
+  const handleChooseProfilePicture = () => {
+    const options = {
+      title: 'Seleccionar imagen de perfil',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+
+    ImagePicker.showImagePicker(options, (response) => {
+      if (response.didCancel) {
+        console.log('Usuario canceló la selección de imagen');
+      } else if (response.error) {
+        console.log('Error:', response.error);
+      } else {
+        // Guardar la imagen seleccionada en el estado
+        setProfileImage(response.uri);
+      }
+    });
   };
 
   return (
@@ -93,6 +125,15 @@ const Register = () => {
         >
           {({ handleSubmit }) => (
             <View style={styles.form}>
+              {/* Mostrar imagen seleccionada */}
+              {profileImage && (
+                <Image source={{ uri: profileImage }} style={styles.profileImage} />
+              )}
+              {/* Botón para seleccionar imagen */}
+              <TouchableOpacity onPress={handleChooseProfilePicture} style={styles.button}>
+                <Text style={styles.buttonText}>Seleccionar Imagen de Perfil</Text>
+              </TouchableOpacity>
+              {/* Resto de campos de entrada */}
               <Input
                 placeholder='Username'
                 name='username'
@@ -103,21 +144,20 @@ const Register = () => {
                 placeholder='Email'
                 name='email'
                 style={styles.input}
-                 placeholderTextColor="#000"
+                placeholderTextColor="#000"
               />
               <Input
                 placeholder='Password'
                 name='password'
                 style={styles.input}
                 secureTextEntry
-                 placeholderTextColor="#000"
+                placeholderTextColor="#000"
               />
-             
               <Input
                 placeholder='Nombre'
                 name='name'
                 style={styles.input}
-                 placeholderTextColor="#000"
+                placeholderTextColor="#000"
               />
               <Input
                 placeholder='Apellido'
@@ -129,19 +169,19 @@ const Register = () => {
                 placeholder='Teléfono'
                 name='phone'
                 style={styles.input}
-                 placeholderTextColor="#000"
+                placeholderTextColor="#000"
               />
               <Input
                 placeholder='Localidad'
                 name='locality'
                 style={styles.input}
-                 placeholderTextColor="#000"
+                placeholderTextColor="#000"
               />
               <Input
                 placeholder='Ruta de la imagen'
                 name='profilePicture'
                 style={styles.input}
-                 placeholderTextColor="#000"
+                placeholderTextColor="#000"
               />
               <TouchableOpacity onPress={handleSubmit} style={styles.button}>
                 <Text style={styles.buttonText}>Registrarse</Text>
