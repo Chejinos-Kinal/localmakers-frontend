@@ -1,26 +1,145 @@
-import React from 'react'
+import React,{ useState } from 'react'
+import { Formik } from 'formik';
+import Input from '../../../Components/Input';
 import Navbar from '../../../Components/Navbar'
-import { ScrollView, StyleSheet } from 'react-native'
+import { Button, StyleSheet, Text, TouchableOpacity, View, ScrollView, Image} from 'react-native'
+import { useNavigate } from 'react-router-native';
 
 const ProfessionAdmin = () => {
-  return (
-   <>
-   <Navbar/>
-    <ScrollView contentContainerStyle={style.container}>
-
-    </ScrollView>
-   </>
-  )
-}
-
-const style = StyleSheet.create({
-    container: {
-        flexGrow: 1,
-        padding: 20,
-        backgroundColor: '#1a202c',
-        width: '100%',
-        minHeight: '100%',
+  const initialValues = {
+    name: '',
+    description: '',
+ 
+  };
+  const navigate = useNavigate();
+  const [profileImage, setProfileImage] = useState(null);
+  const registro = async (values) => {
+    try {
+      // Aquí deberías enviar el formulario con la imagen a tu servicio de registro
+      await registerRequest({ ...values, profilePicture: profileImage });
+      navigate('/*');
+    } catch (error) {
+      console.error('Error al registrarse');
+    }
+  };
+  const handleChooseProfilePicture = () => {
+    const options = {
+      title: 'Seleccionar imagen de perfil',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
       },
-})
+    };
+
+    ImagePicker.showImagePicker(options, (response) => {
+      if (response.didCancel) {
+        console.log('Usuario canceló la selección de imagen');
+      } else if (response.error) {
+        console.log('Error:', response.error);
+      } else {
+        // Guardar la imagen seleccionada en el estado
+        setProfileImage(response.uri);
+      }
+    });
+  };
+
+  return (
+    <>
+    <Navbar/>
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <Text style={styles.title}></Text>
+        <Text style={styles.subtitle}>Agregar Nuevas Profesiones</Text>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={(values) => registro(values)}
+        >
+          {({ handleSubmit }) => (
+            <View style={styles.form}>
+              <Input
+                placeholder='Nombre de la profesion'
+                name='username'
+                style={styles.input}
+                placeholderTextColor='#38b2ac'
+              />
+              <Input
+                placeholder='Descripcion'
+                name='email'
+                style={styles.input}
+                placeholderTextColor='#38b2ac'
+              />
+              
+              <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+                <Text style={styles.buttonText}>Agregar</Text>
+              </TouchableOpacity>
+             
+            </View>
+          )}
+        </Formik>
+      </ScrollView>
+    </View>
+    </>
+  );
+};
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#1a202c',
+  },
+  scrollViewContent: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  form: {
+    width: '100%',
+    backgroundColor: '#2d3748',
+    padding: 20,
+    borderRadius: 10,
+  },
+  input: {
+    borderColor: '#fff',
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 10,
+    color: '#000',
+    marginBottom: 15,
+  },
+  button: {
+    borderWidth: 1,            
+    borderColor: '#00ff00',    
+    padding: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#000',
+    fontWeight: 'bold',
+  },
+  registerText: {
+    marginTop: 10,
+    color: '#38b2ac',
+    textAlign: 'center',
+  },
+  title: {
+    color: '#fff',
+    fontSize: 24,
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  subtitle: {
+    color: '#fff',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  profileImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 10,
+  },
+});
 
 export default ProfessionAdmin

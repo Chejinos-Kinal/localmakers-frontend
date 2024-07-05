@@ -19,6 +19,9 @@ const Sidebar = () => {
             <TouchableOpacity onPress={() => navigate('/InformationUser')} style={styles.sidebarButton}>
                 <Text style={styles.sidebarButtonText}>Actualizar</Text>
             </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigate('/BecomeProfessinal')} style={styles.sidebarButton}>
+                <Text style={styles.sidebarButtonText}>Quieres ser un profesional</Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={() => handleExit()} style={styles.sidebarButton}>
                 <Text style={styles.sidebarButtonText}>Cerrar Sesión</Text>
             </TouchableOpacity>

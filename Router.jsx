@@ -12,6 +12,7 @@ import Account from './src/pages/User/Account/Account';
 import ChatRoom from './src/Components/ChatRoom';
 import HomePageAdmin from './src/pages/Admin/HomePage/HomePageAdmin'
 import ProfessionAdmin from './src/pages/Admin/Profession/ProfessionAdmin';
+import BecomeProfessional from './src/pages/User/BecomeProfessional/BecomeProfessional';
 
 const Router = () => {
   return (
@@ -27,6 +28,7 @@ const Router = () => {
       <Route path='/ChatRoom' element={<ChatRoom/>}/>
       <Route path='/HomePageAdmin' element={<HomePageAdmin/>}/>
       <Route path='/ProfessionAdmin' element={<ProfessionAdmin/>}/>
+      <Route path='/BecomeProfessinal' element={<BecomeProfessional/>} />
 
     </Routes>
   );
