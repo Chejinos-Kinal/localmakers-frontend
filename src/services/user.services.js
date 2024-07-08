@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const apiClient = axios.create({
   baseURL: 'https://localmakers-backend.vercel.app',
-  baseURL: 'http://192.168.43.217:2880',
+ /*  baseURL: 'http://192.168.43.217:2880', */
   timeout: 5000,
 });
 
@@ -44,6 +44,16 @@ export const registerRequest = async (data) => {
             err
         }
     }
+}
+export const registerAdminRequest = async (data) => {
+  try {
+      return await apiClient.post('/user/newAdmin', data)
+  } catch (err) {
+      return {
+          error: true,
+          err
+      }
+  }
 }
 export const dataUserRequest = async ()=>{
     try {

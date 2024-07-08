@@ -1,87 +1,64 @@
-import React,{ useState } from 'react'
+import React, { useState } from 'react';
 import { Formik } from 'formik';
 import Input from '../../../Components/Input';
-import Navbar from '../../../Components/Navbar'
-import { Button, StyleSheet, Text, TouchableOpacity, View, ScrollView, Image} from 'react-native'
+import Navbar from '../../../Components/Navbar';
+import { Button, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { useNavigate } from 'react-router-native';
+import { newProfession } from '../../../services/profession.services';
 
 const ProfessionAdmin = () => {
   const initialValues = {
     name: '',
     description: '',
- 
+    image: 'No hay Imagen'
   };
+  
   const navigate = useNavigate();
-  const [profileImage, setProfileImage] = useState(null);
-  const registro = async (values) => {
+
+  const AgregarPro = async (values) => {
     try {
-      // Aquí deberías enviar el formulario con la imagen a tu servicio de registro
-      await registerRequest({ ...values, profilePicture: profileImage });
-      navigate('/*');
+      await newProfession(values);
+      navigate('/HomePageAdmin');
     } catch (error) {
-      console.error('Error al registrarse');
+      console.error('No puedo');
     }
   };
-  const handleChooseProfilePicture = () => {
-    const options = {
-      title: 'Seleccionar imagen de perfil',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
-
-    ImagePicker.showImagePicker(options, (response) => {
-      if (response.didCancel) {
-        console.log('Usuario canceló la selección de imagen');
-      } else if (response.error) {
-        console.log('Error:', response.error);
-      } else {
-        // Guardar la imagen seleccionada en el estado
-        setProfileImage(response.uri);
-      }
-    });
-  };
-
   return (
     <>
-    <Navbar/>
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <Text style={styles.title}></Text>
-        <Text style={styles.subtitle}>Agregar Nuevas Profesiones</Text>
-        <Formik
-          initialValues={initialValues}
-          onSubmit={(values) => registro(values)}
-        >
-          {({ handleSubmit }) => (
-            <View style={styles.form}>
-              <Input
-                placeholder='Nombre de la profesion'
-                name='username'
-                style={styles.input}
-                placeholderTextColor='#38b2ac'
-              />
-              <Input
-                placeholder='Descripcion'
-                name='email'
-                style={styles.input}
-                placeholderTextColor='#38b2ac'
-              />
-              
-              <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-                <Text style={styles.buttonText}>Agregar</Text>
-              </TouchableOpacity>
-             
-            </View>
-          )}
-        </Formik>
-      </ScrollView>
-    </View>
+      <Navbar />
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollViewContent}>
+          <Text style={styles.title}></Text>
+          <Text style={styles.subtitle}>Agregar Nuevas Profesiones</Text>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={(values) => AgregarPro(values)}
+          >
+            {({ handleSubmit }) => (
+              <View style={styles.form}>
+                <Input
+                  placeholder='Nombre de la profesión'
+                  name='name'
+                  style={styles.input}
+                  placeholderTextColor='#38b2ac'
+                />
+                <Input
+                  placeholder='Descripción'
+                  name='description'
+                  style={styles.input}
+                  placeholderTextColor='#38b2ac'
+                />
+                <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+                  <Text style={styles.buttonText}>Agregar</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </Formik>
+        </ScrollView>
+      </View>
     </>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -134,12 +111,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center',
   },
-  profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginBottom: 10,
-  },
 });
 
-export default ProfessionAdmin
+export default ProfessionAdmin;

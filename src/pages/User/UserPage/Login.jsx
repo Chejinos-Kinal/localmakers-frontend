@@ -21,6 +21,7 @@ const Login = () => {
 
       if (response && response.data && response.data.token) {
         const { role } = response.data.loggedUser
+        await AsyncStorage.setItem('role', role)
         await AsyncStorage.setItem('token', response.data.token);
         if (role === 'ADMIN') {
           navigate('/HomePageAdmin')

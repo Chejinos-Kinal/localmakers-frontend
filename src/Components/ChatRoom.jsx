@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import io from 'socket.io-client';
+import Navbar from './Navbar';
 
 const socket = io('http://localhost:3000'); 
 
@@ -34,6 +35,8 @@ const ChatRoom = () => {
   );
 
   return (
+    <>
+    <Navbar/>
     <View style={styles.container}>
       <FlatList
         data={messages}
@@ -53,6 +56,7 @@ const ChatRoom = () => {
         </TouchableOpacity>
       </View>
     </View>
+    </>
   );
 };
 

@@ -1,22 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { Link } from 'react-router-native';
-import Sidebar from './Sidebar'; // Importar el componente Sidebar
+import { Link, useNavigate } from 'react-router-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Sidebar from './Sidebar';
 
 const Navbar = () => {
-  const [showSidebar, setShowSidebar] = useState(false); // Estado para controlar la visibilidad del Sidebar
+  const [showSidebar, setShowSidebar] = useState(false);
+  const [userRole, setUserRole] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      try {
+        const role = await AsyncStorage.getItem('role');
+        setUserRole(role);
+      } catch (error) {
+        console.error('Error fetching user role from AsyncStorage', error);
+      }
+    };
+
+    fetchUserRole();
+  }, []);
 
   const handlePressUser = () => {
-    setShowSidebar(!showSidebar); // Cambiar el estado para mostrar u ocultar el Sidebar
+    setShowSidebar(!showSidebar);
+  };
+
+  const handlePressHome = () => {
+    if (userRole === 'ADMIN') {
+      navigate('/HomePageAdmin');
+    } else {
+      navigate('/HomePage');
+    }
   };
 
   return (
     <View style={styles.navbarWrapper}>
       <View style={styles.navbarContainer}>
-        <Link to="/HomePage" component={TouchableOpacity} style={styles.navItem}>
+        <TouchableOpacity onPress={handlePressHome} style={styles.navItem}>
           <Image source={require('../img/LogoSinNombreSinFondo.png')} style={styles.navImage} />
-        </Link>
-        
+        </TouchableOpacity>
+
         <TouchableOpacity onPress={handlePressUser} style={styles.navItem}>
           <Image source={require('../img/User.png')} style={styles.navImage} />
         </TouchableOpacity>

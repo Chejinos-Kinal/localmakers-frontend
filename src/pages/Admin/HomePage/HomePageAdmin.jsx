@@ -18,7 +18,7 @@ const HomePageAdmin = () => {
           <TouchableOpacity onPress={() => navigate('/ProfessionAdmin')} style={styles.button}>
             <Text style={styles.buttonText}>Agregar Profesiones</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity onPress={() => navigate('/RegisterAdmin')} style={styles.button}>
             <Text style={styles.buttonText}>Crear nuevos admin</Text>
           </TouchableOpacity>
         </View>

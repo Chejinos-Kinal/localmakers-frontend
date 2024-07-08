@@ -13,6 +13,10 @@ import ChatRoom from './src/Components/ChatRoom';
 import HomePageAdmin from './src/pages/Admin/HomePage/HomePageAdmin'
 import ProfessionAdmin from './src/pages/Admin/Profession/ProfessionAdmin';
 import BecomeProfessional from './src/pages/User/BecomeProfessional/BecomeProfessional';
+import RegisterAdmin from './src/pages/Admin/RegisterAdminPage/RegisterAdmin';
+import Notificaciones from './src/Components/Notificaciones';
+import Notificacion from './src/Components/Notificacion';
+
 
 const Router = () => {
   return (
@@ -29,6 +33,9 @@ const Router = () => {
       <Route path='/HomePageAdmin' element={<HomePageAdmin/>}/>
       <Route path='/ProfessionAdmin' element={<ProfessionAdmin/>}/>
       <Route path='/BecomeProfessinal' element={<BecomeProfessional/>} />
+      <Route path='/RegisterAdmin' element={<RegisterAdmin/>} />
+      <Route path='/Notificaciones' element={<Notificaciones/>} />
+      <Route path='/Notificacion' element={<Notificacion/>} />
 
     </Routes>
   );
