@@ -27,25 +27,26 @@ const Sidebar = () => {
 
     return (
         <View style={styles.sidebarContainer}>
+            {userRole === 'PROFESSIONAL' &&(
+                <TouchableOpacity onPress={() => navigate('/Notificaciones')} style={styles.sidebarButton}>
+                <Text style={styles.sidebarButtonText}>Notificaciones</Text>
+                </TouchableOpacity>
+            )}
             {userRole === 'CLIENT' &&(
+                <>
                 <TouchableOpacity onPress={() => navigate('/Notificaciones')} style={styles.sidebarButton}>
                 <Text style={styles.sidebarButtonText}>Notificaciones</Text>
             </TouchableOpacity>
-            )}
-            {userRole === 'CLIENT' && (
-                  <TouchableOpacity onPress={() => navigate('/Account')} style={styles.sidebarButton}>
+              <TouchableOpacity onPress={() => navigate('/Account')} style={styles.sidebarButton}>
                   <Text style={styles.sidebarButtonText}>Cuenta</Text>
               </TouchableOpacity>
-            )}
-            {userRole === 'CLIENT' && (
-                  <TouchableOpacity onPress={() => navigate('/InformationUser')} style={styles.sidebarButton}>
+              <TouchableOpacity onPress={() => navigate('/InformationUser')} style={styles.sidebarButton}>
                   <Text style={styles.sidebarButtonText}>Actualizar Datos</Text>
               </TouchableOpacity>
-            )}
-            {userRole === 'CLIENT' && (
-                <TouchableOpacity onPress={() => navigate('/BecomeProfessinal')} style={styles.sidebarButton}>
+              <TouchableOpacity onPress={() => navigate('/BecomeProfessinal')} style={styles.sidebarButton}>
                     <Text style={styles.sidebarButtonText}>Quieres ser un profesional</Text>
                 </TouchableOpacity>
+            </>
             )}
             <TouchableOpacity onPress={handleExit} style={styles.sidebarButton}>
                 <Text style={styles.sidebarButtonText}>Cerrar Sesión</Text>

@@ -16,6 +16,8 @@ import BecomeProfessional from './src/pages/User/BecomeProfessional/BecomeProfes
 import RegisterAdmin from './src/pages/Admin/RegisterAdminPage/RegisterAdmin';
 import Notificaciones from './src/Components/Notificaciones';
 import Notificacion from './src/Components/Notificacion';
+import FinalOffer from './src/pages/Profesional/FinalOffer/FinalOffer';
+import ConfirmRegister from './src/Components/ConfirmRegister';
 
 
 const Router = () => {
@@ -36,6 +38,8 @@ const Router = () => {
       <Route path='/RegisterAdmin' element={<RegisterAdmin/>} />
       <Route path='/Notificaciones' element={<Notificaciones/>} />
       <Route path='/Notificacion' element={<Notificacion/>} />
+      <Route path='/FinalOffer' element={<FinalOffer/>} />
+      <Route path='/ConfirmRegister' element={<ConfirmRegister/>} />
 
     </Routes>
   );

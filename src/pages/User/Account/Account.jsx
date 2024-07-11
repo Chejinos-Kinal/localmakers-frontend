@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import Navbar from '../../../Components/Navbar';
 import { getAccount } from '../../../services/account.services';
-
-
 
 const Account = () => {
   const [account, setAccount] = useState([]);
@@ -14,13 +12,12 @@ const Account = () => {
         const response = await getAccount();
         setAccount(response.data.accounts);
       } catch (error) {
-        console.error('Error al ver la cuenta', error);
+        console.error('Error fetching account:', error);
       }
     };
 
     fetchAccount();
   }, []);
-  console.log(account)
 
   return (
     <>
@@ -29,16 +26,17 @@ const Account = () => {
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Cuenta</Text>
         </View>
-          <View  style={styles.card}>
+        {account.length > 0 && (
+          <View style={styles.card}>
             <View style={styles.cardHeader}>
               <Text style={styles.cardTitle}>Deuda y Crédito</Text>
             </View>
             <View style={styles.cardBody}>
-              <Text style={styles.cardText}>Deuda: </Text>
-              <Text style={styles.cardText}>Crédito: </Text>
+              <Text style={styles.cardText}>Deuda: {account[0].deuda}</Text>
+              <Text style={styles.cardText}>Crédito: {account[0].credito}</Text>
             </View>
           </View>
-     
+        )}
       </ScrollView>
     </>
   );
