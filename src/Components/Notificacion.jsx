@@ -8,6 +8,8 @@ import { deleteWorkOffertRequest } from '../services/workOffer.services';
 const Notificacion = () => {
   const location = useLocation();
   const { workOfFer } = location.state;
+  const {finalOffer} = location.state
+  console.log(finalOffer)
   const [role, setRole] = useState('');
   const navigate = useNavigate()
 
@@ -32,8 +34,8 @@ const Notificacion = () => {
   return (
     <>
       <Navbar />
-      
-        <View style={styles.container}>
+        {role === 'PROFESSIONAL' &&(
+          <View style={styles.container}>
           <View style={styles.profileContainer}>
             <Text style={styles.name}>Titulo</Text>
             <Text style={styles.name}>{workOfFer.title}</Text>
@@ -59,6 +61,16 @@ const Notificacion = () => {
             </TouchableOpacity>
           </View>
         </View>
+        )}
+        {role === 'CLIENT' && (
+          <View style={styles.container}>
+               <View style={styles.profileContainer}>
+               <Text style={styles.description}>Precio: Q.{finalOffer.price}</Text>
+            <Text style={styles.description}>Descripción: {finalOffer.workOffer.problemDescription}</Text>
+            <Text style={styles.contact}>Ubicación: {finalOffer.workSite}</Text>
+                </View>
+          </View>
+        )}
    
     </>
   );

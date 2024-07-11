@@ -79,12 +79,12 @@ const Notificaciones = () => {
             {userRole === 'CLIENT' && (
               <View>
                 {finalOffer.length > 0 ? (
-                  finalOffer.map((offer, index) => (
-                    <TouchableOpacity key={index}>
+                  finalOffer.map((finalOffer, index) => (
+                    <TouchableOpacity key={index} onPress={() => navigate('/Notificacion', { state: { finalOffer } })}>
                       <View style={style.containerCard}>
-                        <Text style={style.textContainerTitle}>{formatDate(offer.workDate)}</Text>
-                        <Text style={style.textContainerTitle}>Q.{offer.price}</Text>
-                        <Text style={style.textCard}>{offer.workSite}</Text>
+                        <Text style={style.textContainerTitle}>{formatDate(finalOffer.workDate)}</Text>
+                        <Text style={style.textContainerTitle}>Q.{finalOffer.price}</Text>
+                        <Text style={style.textCard}>{finalOffer.workSite}</Text>
                       </View>
                     </TouchableOpacity>
                   ))

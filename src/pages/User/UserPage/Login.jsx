@@ -25,9 +25,12 @@ const Login = () => {
         await AsyncStorage.setItem('token', response.data.token);
         if (role === 'ADMIN') {
           navigate('/HomePageAdmin')
-        } else {
+        } else if(role === 'PROFESSIONAL'){
+          navigate('/Notificaciones');
+        }else{
           navigate('/HomePage');
         }
+        
 
       } else {
         setErrorMessage('Usuario o contraseña inválido');

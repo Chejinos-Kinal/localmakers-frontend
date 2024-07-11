@@ -28,8 +28,8 @@ const Sidebar = () => {
     return (
         <View style={styles.sidebarContainer}>
             {userRole === 'PROFESSIONAL' &&(
-                <TouchableOpacity onPress={() => navigate('/Notificaciones')} style={styles.sidebarButton}>
-                <Text style={styles.sidebarButtonText}>Notificaciones</Text>
+                <TouchableOpacity onPress={() => navigate('/')} style={styles.sidebarButton}>
+                <Text style={styles.sidebarButtonText}>Modo Cliente</Text>
                 </TouchableOpacity>
             )}
             {userRole === 'CLIENT' &&(
