@@ -4,12 +4,13 @@ import Navbar from './Navbar';
 import { useLocation, useNavigate } from 'react-router-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { deleteWorkOffertRequest } from '../services/workOffer.services';
+import { format } from 'date-fns';
 
 const Notificacion = () => {
   const location = useLocation();
   const { workOfFer } = location.state;
-  const {finalOffer} = location.state
-  console.log(finalOffer)
+  const { finalOffer } = location.state
+
   const [role, setRole] = useState('');
   const navigate = useNavigate()
 
@@ -31,11 +32,18 @@ const Notificacion = () => {
     await deleteWorkOffertRequest(workOfferId)
     navigate('/Notificaciones')
   }
+
+  const formatDate = (dateString) => {
+    return format(new Date(dateString), 'dd/MM/yyyy'); // Formatea la fecha a 'dd/MM/yyyy'
+};
+
+
+
   return (
     <>
       <Navbar />
-        {role === 'PROFESSIONAL' &&(
-          <View style={styles.container}>
+      {role === 'PROFESSIONAL' && (
+        <View style={styles.container}>
           <View style={styles.profileContainer}>
             <Text style={styles.name}>Titulo</Text>
             <Text style={styles.name}>{workOfFer.title}</Text>
@@ -53,7 +61,7 @@ const Notificacion = () => {
             </View>
           </View>
           <View style={styles.containerButton}>
-            <TouchableOpacity style={styles.cardButton} onPress={()=> navigate('/FinalOffer',{state: {workOfFer}})}>
+            <TouchableOpacity style={styles.cardButton} onPress={() => navigate('/FinalOffer', { state: { workOfFer } })}>
               <Text style={styles.cardButtonText}>Realizar una Oferta</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.cardButton} onPress={() => handleDelete(workOfFer._id)}>
@@ -61,17 +69,39 @@ const Notificacion = () => {
             </TouchableOpacity>
           </View>
         </View>
-        )}
-        {role === 'CLIENT' && (
-          <View style={styles.container}>
-               <View style={styles.profileContainer}>
-               <Text style={styles.description}>Precio: Q.{finalOffer.price}</Text>
-            <Text style={styles.description}>Descripción: {finalOffer.workOffer.problemDescription}</Text>
+      )}
+      {role === 'CLIENT' && (
+        <View style={styles.container}>
+          <View style={styles.profileContainer}>
+          <Text style={styles.description}>{finalOffer.workOffer.title}</Text>
+          <Text style={styles.description}>Descripción: {finalOffer.workOffer.problemDescription}</Text>
+            <Text style={styles.description}>Precio: Q.{finalOffer.price}.00</Text>
+            <Text style={styles.description}>Fecha: {formatDate( finalOffer.workDate)}</Text>
             <Text style={styles.contact}>Ubicación: {finalOffer.workSite}</Text>
-                </View>
           </View>
-        )}
-   
+            <Text style={styles.name}>Informacion del profesional</Text>
+            <View style={styles.profileContainer}>
+              <View style={styles.cardHeader}>
+                <View style={styles.cardHeaderContent}>
+                  <Text style={styles.cardTitle}>{finalOffer.professional.name} {finalOffer.professional.surname}  </Text>
+                  <Image source={{ uri: finalOffer.professional.profilePicture }} style={styles.profilePicture} />
+                </View>
+                <Text style={styles.contact} >Tel:{finalOffer.professional.phone}</Text>
+                <Text style={styles.contact} >Tel:{finalOffer.professional.email}</Text>
+              </View>
+            </View>
+            <View style={styles.containerButton}>
+            <TouchableOpacity style={styles.cardButton} onPress={() => navigate('/MetodoDePago', { state: { finalOffer } })}>
+              <Text style={styles.cardButtonText}>Aceptar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.cardButton}>
+              <Text style={styles.cardButtonText}>No estoy interesado</Text>
+            </TouchableOpacity>
+            </View>
+          </View>
+        
+      )}
+
     </>
   );
 };

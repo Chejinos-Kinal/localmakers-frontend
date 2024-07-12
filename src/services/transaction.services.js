@@ -2,8 +2,8 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const apiClient = axios.create({
-/*   baseURL: 'https://localmakers-backend.vercel.app', */
-baseURL: 'http://192.168.0.18:2880',
+ /*   baseURL: 'https://localmakers-backend.vercel.app', */
+ baseURL: 'http://192.168.0.18:2880',
   timeout: 5000,
 });
 
@@ -24,32 +24,29 @@ apiClient.interceptors.request.use(
   }
 );
 
-export const createWorkOffertRequest = async (data, idProf) => {
+export const newTransactionRequest = async(data)=>{
   try {
-    return await apiClient.post(`/workoffer/createWorkOffer/${idProf}`, data);
+    return await apiClient.post('/transaction/new',data)
   } catch (err) {
-    console.error(err);
+    return{
+      error: true,
+      err,
+    }
+  }
+}
+export const getTransactionClient = async()=>{
+  try {
+    return await apiClient.get('/transaction/getClient')
+  } catch (err) {
     return {
       error: true,
       err,
-    };
-  }
-};
-
-export const getWorkOffertRequest = async()=>{
-  try {
-    return await apiClient.get('/workoffer/getWorkOffersByLoggedUser')
-  } catch (err) {
-     return {
-      error: true,
-      err,
-     }
+    }
   }
 }
-
-export const deleteWorkOffertRequest = async(workOfferId)=>{
+export const getTransactionProfesional = async()=>{
   try {
-    return await apiClient.delete(`/workoffer/deleteWorkOffer/${workOfferId}`)
+    return await apiClient.get('/transaction/getProfesional')
   } catch (err) {
     return {
       error: true,

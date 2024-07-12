@@ -18,6 +18,8 @@ import Notificaciones from './src/Components/Notificaciones';
 import Notificacion from './src/Components/Notificacion';
 import FinalOffer from './src/pages/Profesional/FinalOffer/FinalOffer';
 import ConfirmRegister from './src/Components/ConfirmRegister';
+import MetodoDePago from './src/Components/MetodoDePago';
+import ConfirmacionDeTrabajo from './src/Components/ConfirmacionDeTrabajo';
 
 
 const Router = () => {
@@ -40,6 +42,8 @@ const Router = () => {
       <Route path='/Notificacion' element={<Notificacion/>} />
       <Route path='/FinalOffer' element={<FinalOffer/>} />
       <Route path='/ConfirmRegister' element={<ConfirmRegister/>} />
+      <Route path='/MetodoDePago' element={<MetodoDePago/>} />
+      <Route path='/ConfirmacionDeTrabajo' element={<ConfirmacionDeTrabajo/>} />
 
     </Routes>
   );
