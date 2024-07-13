@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
 import Navbar from '../../../Components/Navbar';
-import { useNavigate } from 'react-router-native';  
+import { useNavigation } from '@react-navigation/native'; // Importación corregida
+
 const { width } = Dimensions.get('window');
 
 const HomePageAdmin = () => {
-  const navigate = useNavigate();  
+  const navigation = useNavigation(); // Uso de useNavigation
 
   return (
     <>
@@ -15,10 +16,10 @@ const HomePageAdmin = () => {
           <Text style={styles.headerText}>Vista administrador</Text>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={() => navigate('/ProfessionAdmin')} style={styles.button}>
+          <TouchableOpacity onPress={() => navigation.navigate('ProfessionAdmin')} style={styles.button}>
             <Text style={styles.buttonText}>Agregar Profesiones</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigate('/RegisterAdmin')} style={styles.button}>
+          <TouchableOpacity onPress={() => navigation.navigate('RegisterAdmin')} style={styles.button}>
             <Text style={styles.buttonText}>Crear nuevos admin</Text>
           </TouchableOpacity>
         </View>
@@ -40,14 +41,11 @@ const HomePageAdmin = () => {
           <View style={styles.containerInformationRight}>
             <Text style={styles.subheading}>VISIÓN:</Text>
             <Text style={styles.text}>
-              Crear un entorno en el cual las personas no sufran por problemas de
-              empleo, convirtiendo a las personas en emprendedores independientes.
+              Crear un entorno en el cual las personas no sufran por problemas de empleo, convirtiendo a las personas en emprendedores independientes.
             </Text>
             <Text style={styles.subheading}>MISIÓN</Text>
             <Text style={styles.text}>
-              Crear una aplicación en la cual podamos obtener un empleo para el
-              cual todas las personas puedan obtener un empleo o tareas a cambio
-              de dinero.
+              Crear una aplicación en la cual podamos obtener un empleo para el cual todas las personas puedan obtener un empleo o tareas a cambio de dinero.
             </Text>
           </View>
         </View>

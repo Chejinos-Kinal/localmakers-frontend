@@ -1,10 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
-import { useNavigate } from 'react-router-native';
+import { useNavigation,  } from '@react-navigation/native';
 
 const Sidebar = () => {
-    const navigate = useNavigate();
+    const navigation = useNavigation();
     const [userRole, setUserRole] = useState('');
 
     useEffect(() => {
@@ -22,28 +22,28 @@ const Sidebar = () => {
 
     const handleExit = async () => {
         await AsyncStorage.clear();
-        navigate('/login');
+        navigation.navigate('Login');
     };
 
     return (
         <View style={styles.sidebarContainer}>
             {userRole === 'PROFESSIONAL' &&(
-                <TouchableOpacity onPress={() => navigate('/')} style={styles.sidebarButton}>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.sidebarButton}>
                 <Text style={styles.sidebarButtonText}>Modo Cliente</Text>
                 </TouchableOpacity>
             )}
             {userRole === 'CLIENT' &&(
                 <>
-                <TouchableOpacity onPress={() => navigate('/Notificaciones')} style={styles.sidebarButton}>
+                <TouchableOpacity onPress={() => navigation.navigate('Notificaciones')} style={styles.sidebarButton}>
                 <Text style={styles.sidebarButtonText}>Notificaciones</Text>
             </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigate('/Account')} style={styles.sidebarButton}>
+              <TouchableOpacity onPress={() => navigation.navigate('Account')} style={styles.sidebarButton}>
                   <Text style={styles.sidebarButtonText}>Cuenta</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigate('/InformationUser')} style={styles.sidebarButton}>
+              <TouchableOpacity onPress={() => navigation.navigate('UpdateUser')} style={styles.sidebarButton}>
                   <Text style={styles.sidebarButtonText}>Actualizar Datos</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigate('/BecomeProfessinal')} style={styles.sidebarButton}>
+              <TouchableOpacity onPress={() => navigation.navigate('BecomeProfessional')} style={styles.sidebarButton}>
                     <Text style={styles.sidebarButtonText}>Quieres ser un profesional</Text>
                 </TouchableOpacity>
             </>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Formik } from 'formik';
-import { Text, View, Button, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { loginValidationSchema } from '../../../validationSchemas/login';
 import { loginRequest } from '../../../services/user.services';
-import { useNavigate } from 'react-router-native';
+import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Input from '../../../Components/Input';
 
@@ -14,24 +14,23 @@ const Login = () => {
     password: ''
   };
 
-  const navigate = useNavigate();
+  const navigation = useNavigation();
+  
   const login = async (values) => {
     try {
       const response = await loginRequest(values);
 
       if (response && response.data && response.data.token) {
-        const { role } = response.data.loggedUser
-        await AsyncStorage.setItem('role', role)
+        const { role } = response.data.loggedUser;
+        await AsyncStorage.setItem('role', role);
         await AsyncStorage.setItem('token', response.data.token);
         if (role === 'ADMIN') {
-          navigate('/HomePageAdmin')
-        } else if(role === 'PROFESSIONAL'){
-          navigate('/Notificaciones');
-        }else{
-          navigate('/HomePage');
+          navigation.navigate('HomePageAdmin');
+        } else if (role === 'PROFESSIONAL') {
+          navigation.navigate('Notificaciones');
+        } else {
+          navigation.navigate('HomePage');
         }
-        
-
       } else {
         setErrorMessage('Usuario o contraseña inválido');
       }
@@ -69,7 +68,7 @@ const Login = () => {
             <TouchableOpacity onPress={handleSubmit} style={styles.button}>
               <Text style={styles.buttonText}>Log In</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigate('/Register')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Register')}>
               <Text style={styles.registerText}>¿Aún no tienes una cuenta? Regístrate</Text>
             </TouchableOpacity>
           </View>
@@ -126,6 +125,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
 
 export default Login;

@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 import Input from '../../../Components/Input';
 import Navbar from '../../../Components/Navbar';
 import { Button, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
-import { useNavigate } from 'react-router-native';
+import { useNavigation,  } from '@react-navigation/native';
 import { newProfession } from '../../../services/profession.services';
 
 const ProfessionAdmin = () => {
@@ -13,12 +13,12 @@ const ProfessionAdmin = () => {
     image: 'No hay Imagen'
   };
   
-  const navigate = useNavigate();
+  const navigation = useNavigation();
 
   const AgregarPro = async (values) => {
     try {
       await newProfession(values);
-      navigate('/HomePageAdmin');
+      navigation.navigate('/HomePageAdmin');
     } catch (error) {
       console.error('No puedo');
     }

@@ -2,25 +2,27 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Navbar from '../../../Components/Navbar';
-import { useLocation, useNavigate } from 'react-router-native';
+
+import { useNavigation, useRoute } from '@react-navigation/native';
 import Input from '../../../Components/Input';
 import { Formik } from 'formik';
 import { createWorkOffertRequest } from '../../../services/workOffer.services';
 
 const MakeWorkOffer = () => {
-  const location = useLocation();
+  const navigation = useNavigation();
+  const route = useRoute();
+  const { professional } = route.params;
   const initialValues = {
     title: '',
     problemDescription: '',
     workSite: '' 
   };
-  const navigate = useNavigate();
-  const { professional } = location.state;
+
 
   const createWorkOffer = async (values) => {
     const idProf = professional._id;
     await createWorkOffertRequest(values, idProf);
-  
+    navigation.navigate('HomePage')
 
   };
 

@@ -4,7 +4,7 @@ import { Button, StyleSheet, Text, TouchableOpacity, View, ScrollView, Image } f
 import Input from '../../../Components/Input';
 import { registerValidateSchema } from '../../../validationSchemas/register';
 import { registerAdminRequest, registerRequest } from '../../../services/user.services';
-import { useNavigate } from 'react-router-native';
+import { useNavigation } from '@react-navigation/native'; 
 import ImagePicker from 'react-native-image-picker';
 import Navbar from '../../../Components/Navbar';
 
@@ -20,14 +20,14 @@ const RegisterAdmin = () => {
     profilePicture: '', 
   };
 
-  const navigate = useNavigate();
+  const navigation = useNavigation()
 
 
   const registro = async (values) => {
     try {
       // Aquí deberías enviar el formulario con la imagen a tu servicio de registro
       await registerAdminRequest(values);
-      navigate('/HomePageAdmin');
+      navigation.navigate('HomePageAdmin');
     } catch (error) {
       console.error('Error al registrarse');
     }

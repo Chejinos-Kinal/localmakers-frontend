@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Navbar from './Navbar';
-import { useLocation, useNavigate } from 'react-router-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { deleteWorkOffertRequest } from '../services/workOffer.services';
 import { format } from 'date-fns';
 
 const Notificacion = () => {
-  const location = useLocation();
-  const { workOfFer } = location.state;
-  const { finalOffer } = location.state
-
+  const navigation = useNavigation();
+  const route = useRoute();
+  const { workOfFer } = route.params;
+  const { finalOffer } = route.params
   const [role, setRole] = useState('');
-  const navigate = useNavigate()
-
   useEffect(() => {
     const fetchRole = async () => {
       try {
@@ -30,7 +28,7 @@ const Notificacion = () => {
 
   const handleDelete = async (workOfferId) => {
     await deleteWorkOffertRequest(workOfferId)
-    navigate('/Notificaciones')
+    navigation.navigate('Notificaciones')
   }
 
   const formatDate = (dateString) => {
@@ -42,7 +40,9 @@ const Notificacion = () => {
   return (
     <>
       <Navbar />
+      <ScrollView contentContainerStyle={styles.containerTotal}>
       {role === 'PROFESSIONAL' && (
+        
         <View style={styles.container}>
           <View style={styles.profileContainer}>
             <Text style={styles.name}>Titulo</Text>
@@ -61,7 +61,7 @@ const Notificacion = () => {
             </View>
           </View>
           <View style={styles.containerButton}>
-            <TouchableOpacity style={styles.cardButton} onPress={() => navigate('/FinalOffer', { state: { workOfFer } })}>
+            <TouchableOpacity style={styles.cardButton} onPress={() => navigation.navigate('FinalOffer',  { workOfFer } )}>
               <Text style={styles.cardButtonText}>Realizar una Oferta</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.cardButton} onPress={() => handleDelete(workOfFer._id)}>
@@ -69,6 +69,7 @@ const Notificacion = () => {
             </TouchableOpacity>
           </View>
         </View>
+        
       )}
       {role === 'CLIENT' && (
         <View style={styles.container}>
@@ -91,7 +92,7 @@ const Notificacion = () => {
               </View>
             </View>
             <View style={styles.containerButton}>
-            <TouchableOpacity style={styles.cardButton} onPress={() => navigate('/MetodoDePago', { state: { finalOffer } })}>
+            <TouchableOpacity style={styles.cardButton} onPress={() => navigation.navigate('MetodoDePago',  { finalOffer } )}>
               <Text style={styles.cardButtonText}>Aceptar</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.cardButton}>
@@ -99,13 +100,20 @@ const Notificacion = () => {
             </TouchableOpacity>
             </View>
           </View>
-        
+      
       )}
+        </ScrollView>
 
     </>
   );
 };
 const styles = StyleSheet.create({
+  containerTotal: {
+    flexGrow: 1,
+        backgroundColor: '#1a202c',
+        width: '100%',
+        minHeight: '100%',
+  },
   container: {
     flex: 1,
     padding: 20,

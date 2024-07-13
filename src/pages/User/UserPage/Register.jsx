@@ -4,7 +4,7 @@ import { Button, StyleSheet, Text, TouchableOpacity, View, ScrollView, Image } f
 import Input from '../../../Components/Input';
 import { registerValidateSchema } from '../../../validationSchemas/register';
 import { registerRequest } from '../../../services/user.services';
-import { useNavigate } from 'react-router-native';
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation
 import ImagePicker from 'react-native-image-picker';
 
 const Register = () => {
@@ -16,20 +16,19 @@ const Register = () => {
     password: '',
     phone: '',
     locality: '',
-    profilePicture: '', // Para almacenar la ruta de la imagen seleccionada
+    profilePicture: '', // To store the selected image path
   };
 
-  const navigate = useNavigate();
+  const navigation = useNavigation(); // Use useNavigation
 
   const [profileImage, setProfileImage] = useState(null);
 
   const registro = async (values) => {
     try {
-      // Aquí deberías enviar el formulario con la imagen a tu servicio de registro
       await registerRequest({ ...values, profilePicture: profileImage });
-      navigate('/*');
+      navigation.navigate('Home'); // Navigate to the Home screen after registration
     } catch (error) {
-      console.error('Error al registrarse');
+      console.error('Error al registrarse', error);
     }
   };
 
@@ -48,8 +47,7 @@ const Register = () => {
       } else if (response.error) {
         console.log('Error:', response.error);
       } else {
-        // Guardar la imagen seleccionada en el estado
-        setProfileImage(response.uri);
+        setProfileImage(response.uri); // Save the selected image in the state
       }
     });
   };
@@ -66,8 +64,6 @@ const Register = () => {
         >
           {({ handleSubmit }) => (
             <View style={styles.form}>
-
- 
               <Input
                 placeholder='Username'
                 name='username'
@@ -111,16 +107,13 @@ const Register = () => {
                 style={styles.input}
                 placeholderTextColor='#38b2ac'
               />
-              <Input
-                placeholder='Ruta de la imagen'
-                name='profilePicture'
-                style={styles.input}
-                placeholderTextColor='#38b2ac'
-              />
+              <TouchableOpacity onPress={handleChooseProfilePicture}>
+                <Text style={styles.buttonText}>Seleccionar Imagen de Perfil</Text>
+              </TouchableOpacity>
               <TouchableOpacity onPress={handleSubmit} style={styles.button}>
                 <Text style={styles.buttonText}>Registrarse</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigate('/Login')}>
+              <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.registerText}>¿Ya tiene una cuenta? Login</Text>
               </TouchableOpacity>
             </View>
@@ -130,7 +123,6 @@ const Register = () => {
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -157,8 +149,8 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   button: {
-    borderWidth: 1,            
-    borderColor: '#00ff00',    
+    borderWidth: 1,
+    borderColor: '#00ff00',
     padding: 10,
     borderRadius: 10,
     alignItems: 'center',
@@ -183,13 +175,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center',
   },
-  profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginBottom: 10,
-  },
 });
-
 
 export default Register;

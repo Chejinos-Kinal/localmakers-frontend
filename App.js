@@ -1,22 +1,57 @@
-import React from 'react';
-import { NativeRouter } from 'react-router-native';
-import { View, StyleSheet } from 'react-native';
-import Router from './Router.jsx';
-import { StatusBar } from 'expo-status-bar';
-import ImagePicker from 'react-native-image-picker'; // Importa react-native-image-picker
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet, View } from 'react-native';
+import HomePage from './src/pages/User/HomePages/HomePage';
+import ProfessionalInformation from './src/pages/User/ProfessionalInformation/ProfessionalInformation';
+import Login from './src/pages/User/UserPage/Login';
+import Register from './src/pages/User/UserPage/Register';
+import MakeWorkOffer from './src/pages/User/WorkOffer/MakeWorkOffer';
+import Information from './src/pages/User/UserPage/Information';
+import Review from './src/pages/User/Review/Review';
+import UpdateUser from './src/pages/User/UserPage/UpdateUser';
+import Account from './src/pages/User/Account/Account';
+import ChatRoom from './src/Components/ChatRoom';
+import HomePageAdmin from './src/pages/Admin/HomePage/HomePageAdmin';
+import ProfessionAdmin from './src/pages/Admin/Profession/ProfessionAdmin';
+import BecomeProfessional from './src/pages/User/BecomeProfessional/BecomeProfessional';
+import RegisterAdmin from './src/pages/Admin/RegisterAdminPage/RegisterAdmin';
+import Notificaciones from './src/Components/Notificaciones';
+import Notificacion from './src/Components/Notificacion';
+import FinalOffer from './src/pages/Profesional/FinalOffer/FinalOffer';
+import ConfirmRegister from './src/Components/ConfirmRegister';
+import MetodoDePago from './src/Components/MetodoDePago';
+import ConfirmacionDeTrabajo from './src/Components/ConfirmacionDeTrabajo';
 
-global.ImagePicker = ImagePicker; // Configura ImagePicker globalmente
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <>
-      <StatusBar style='' />
-      <NativeRouter>
-        <View style={styles.container}>
-          <Router />
-        </View>
-      </NativeRouter>
-    </>
+    <NavigationContainer>
+      <View style={styles.container}>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Review" component={Review} />
+          <Stack.Screen name="HomePage" component={HomePage} />
+          <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen name="ProfessionalInformation" component={ProfessionalInformation} />
+          <Stack.Screen name="MakeWorkOffer" component={MakeWorkOffer} />
+          <Stack.Screen name="UpdateUser" component={UpdateUser} />
+          <Stack.Screen name="Account" component={Account} />
+          <Stack.Screen name="ChatRoom" component={ChatRoom} />
+          <Stack.Screen name="HomePageAdmin" component={HomePageAdmin} />
+          <Stack.Screen name="ProfessionAdmin" component={ProfessionAdmin} />
+          <Stack.Screen name="BecomeProfessional" component={BecomeProfessional} />
+          <Stack.Screen name="RegisterAdmin" component={RegisterAdmin} />
+          <Stack.Screen name="Notificaciones" component={Notificaciones} />
+          <Stack.Screen name="Notificacion" component={Notificacion} />
+          <Stack.Screen name="FinalOffer" component={FinalOffer} />
+          <Stack.Screen name="ConfirmRegister" component={ConfirmRegister} />
+          <Stack.Screen name="MetodoDePago" component={MetodoDePago} />
+          <Stack.Screen name="ConfirmacionDeTrabajo" component={ConfirmacionDeTrabajo} />
+        </Stack.Navigator>
+      </View>
+    </NavigationContainer>
   );
 };
 

@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
 import Navbar from '../../../Components/Navbar'
 import { getUserProfessionRequest } from '../../../services/profession.services';
-import { useNavigate } from 'react-router-native';
+import { useNavigation } from '@react-navigation/native';
 
 const { width } = Dimensions.get('window');
 
 const HomePage = () => {
   const [userProfession, setUserProfession] = useState([]);
 
-  const navigate = useNavigate();
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchUserProfessions = async () => {
@@ -27,7 +27,7 @@ const HomePage = () => {
 
   
   const handleMoreInfoPress = (professional) => {
-    navigate('/informationProfession', { state: { professional } });
+    navigation.navigate('ProfessionalInformation',  { professional } );
   };
 
   return (

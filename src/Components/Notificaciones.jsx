@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { getWorkOffertRequest } from '../services/workOffer.services';
-import { useNavigate } from 'react-router-native';
+import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getFinalOfferRequest } from '../services/FinalOffer.services';
 import { format } from 'date-fns';
@@ -14,7 +14,7 @@ const Notificaciones = () => {
     const [TransaccionProfesional, setTransaccionProfesional] = useState([])
     const [userRole, setUserRole] = useState('');
     const [view, setView] = useState(''); // Estado para controlar la vista actual
-    const navigate = useNavigate();
+    const navigation = useNavigation();
 
     useEffect(() => {
         const fetchUserRole = async () => {
@@ -77,7 +77,7 @@ const Notificaciones = () => {
                             <View>
                                 {workOffer.length > 0 ? (
                                     workOffer.map((workOfFer, index) => (
-                                        <TouchableOpacity key={index} onPress={() => navigate('/Notificacion', { state: { workOfFer } })}>
+                                        <TouchableOpacity key={index} onPress={() => navigation.navigate('Notificacion',{ workOfFer } )}>
                                             <View style={style.containerCard}>
                                                 <Text style={style.textContainerTitle}>{workOfFer.title}</Text>
                                                 <Text style={style.textCard}>{workOfFer.problemDescription}</Text>
@@ -93,7 +93,7 @@ const Notificaciones = () => {
                             <View>
                                  {TransaccionProfesional.length > 0 ? (
                                     TransaccionProfesional.map((TransaccionProfesional, index) => (
-                                        <TouchableOpacity key={index}  onPress={() => navigate('/ConfirmacionDeTrabajo')}>
+                                        <TouchableOpacity key={index}  onPress={() => navigation.navigate('ConfirmacionDeTrabajo' )}>
                                             <View style={style.containerCard}>
                                                 <Text style={style.textContainerTitle}> Usuario: {TransaccionProfesional.user.name}</Text>
                                                 <Text style={style.textCard}>Lugar: {TransaccionProfesional.finalOffer.workSite}</Text>
@@ -122,7 +122,7 @@ const Notificaciones = () => {
                             <View>
                                 {finalOffer.length > 0 ? (
                                     finalOffer.map((finalOffer, index) => (
-                                        <TouchableOpacity key={index} onPress={() => navigate('/Notificacion', { state: { finalOffer } })}>
+                                        <TouchableOpacity key={index} onPress={() => navigation.navigate('Notificacion',{ finalOffer } )}>
                                             <View style={style.containerCard}>
                                                 <Text style={style.textContainerTitle}>{formatDate(finalOffer.workDate)}</Text>
                                                 <Text style={style.textContainerTitle}>Q.{finalOffer.price}</Text>
@@ -140,7 +140,7 @@ const Notificaciones = () => {
                             <View>
                             {TransaccionProfesional.length > 0 ? (
                                TransaccionProfesional.map((TransaccionProfesional, index) => (
-                                   <TouchableOpacity key={index}  onPress={() => navigate('/ConfirmacionDeTrabajo')}>
+                                   <TouchableOpacity key={index}  onPress={() =>navigation.navigate('ConfirmacionDeTrabajo' )}>
                                        <View style={style.containerCard}>
                                            <Text style={style.textContainerTitle}> Usuario: {TransaccionProfesional.professional.name}</Text>
                                            <Text style={style.textCard}>Lugar: {TransaccionProfesional.finalOffer.workSite}</Text>

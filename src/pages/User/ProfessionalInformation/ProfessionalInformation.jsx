@@ -1,21 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { useLocation } from 'react-router-native';
-import { useNavigate } from 'react-router-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import Navbar from '../../../Components/Navbar';
-import ChatRoom from '../../../Components/ChatRoom'; // Importa el componente de chat
 
 const ProfessionalInformation = () => {
-  const location = useLocation();
-  const { professional } = location.state;
-  const navigation = useNavigate();
+  const navigation = useNavigation();
+  const route = useRoute();
+  const { professional } = route.params; // Obtener los parámetros desde route.params
 
   const handleMakeWorkOffer = () => {
-    navigation('/MakeWorkOffer', { state: { professional } });
+    navigation.navigate('MakeWorkOffer', { professional }); // Navegación corregida
   };
 
   const handleChat = () => {
-    navigation('/ChatRoom', { state: { professional } }); // Navega a la pantalla de chat
+    navigation.navigate('ChatRoom', { professional }); // Navegación corregida
   };
 
   return (

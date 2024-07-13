@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import Navbar from './Navbar'
 import { Picker } from '@react-native-picker/picker'
-import { useLocation } from 'react-router-native'
+import { useRoute } from '@react-navigation/native';
 import { newTransactionRequest } from '../services/transaction.services'
 
 const MetodoDePago = () => {
-  const location = useLocation()
-  const { finalOffer } = location.state
+  const route = useRoute();
+  const { finalOffer } =  route.params
  
   const [selectedValue, setSelectedValue] = useState('')
   const [values, setValues] = useState({
