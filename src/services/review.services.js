@@ -24,45 +24,37 @@ apiClient.interceptors.request.use(
   }
 );
 
-export const newTransactionRequest = async(data)=>{
+
+export const newReviewRequest = async(data) =>{
   try {
-    return await apiClient.post('/transaction/new',data)
-  } catch (err) {
-    return{
-      error: true,
-      err,
-    }
-  }
-}
-export const getTransactionClient = async()=>{
-  try {
-    return await apiClient.get('/transaction/getClient')
+      return await apiClient.post('/review/new', data)
   } catch (err) {
     return {
-      error: true,
       err,
-    }
+      error: err
   }
-}
-export const getTransactionProfesional = async()=>{
-  try {
-    return await apiClient.get('/transaction/getProfesional')
-  } catch (err) {
-    return {
-      error: true,
-      err,
-    }
   }
 }
 
-export const updateStatusRequest = async(id, data)=>{
+export const getReviewProfesionalRequest = async(userProfessional)=>{
   try {
-      return await apiClient.put(`/transaction/updateStatus/${id}`,data)
+    return await apiClient.get(`/review/get/${userProfessional}`)
   } catch (err) {
-    return{
-      error: true,
+    return {
       err,
+      error: err
+      
     }
-
+  }
+}
+export const getReviewProfesionalStarRequest = async()=>{
+  try {
+    return await apiClient.get(`/review/getProfesional`)
+  } catch (err) {
+    return {
+      err,
+      error: err
+      
+    }
   }
 }

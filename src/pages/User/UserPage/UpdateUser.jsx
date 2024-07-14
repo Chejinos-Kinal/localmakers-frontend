@@ -2,30 +2,19 @@ import { Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import Input from '../../../Components/Input';
-import { registerValidateSchema } from '../../../validationSchemas/register';
 import { dataUserRequest, registerRequest } from '../../../services/user.services';
-import { useNavigation } from '@react-navigation/native'; // Importación corregida
+import { useNavigation } from '@react-navigation/native';
 import Navbar from '../../../Components/Navbar';
 
 const UpdateUser = () => {
-    const [user, setUser] = useState([]);
-    const initialValues = {
-        name: '',
-        surname: '',
-        email: '',
-        username: '',
-        password: '',
-        passwordConfirm: '',
-        phone: '',
-        locality: '',
-        profilePicture: '',
-    };
+    const [user, setUser] = useState(null);
+    const navigation = useNavigation();
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
                 const response = await dataUserRequest();
-                setUser(response.data);
+                setUser(response.data.foundedData);
             } catch (error) {
                 console.error('Error al ver los datos del usuario', error);
             }
@@ -33,16 +22,23 @@ const UpdateUser = () => {
         fetchUserData();
     }, []);
 
-    const navigation = useNavigation(); // Uso de useNavigation
-
-    const registro = async (values) => {
+    const Actualizar = async (values) => {
         try {
-            await registerRequest(values); // Suponiendo que tienes una función para actualizar el usuario
-            navigation.navigate('Perfil'); // Navegar a la pantalla de perfil después de actualizar
+            const response = await UpdateUser(user._id, values);
+            
+            if (response.error) {
+                console.error('Error en la actualización:', response.err);
+                // You might want to show an error message to the user here
+            } else {
+                navigation.navigate('HomePage');
+            }
         } catch (error) {
             console.error('Error al actualizar el usuario', error);
         }
     };
+    
+
+    if (!user) return <Text>Cargando...</Text>; // Loading state
 
     return (
         <>
@@ -52,19 +48,28 @@ const UpdateUser = () => {
                     <Text style={styles.title}>Mi Perfil</Text>
                     <Text style={styles.subtitle}>Actualiza o elimina tu cuenta</Text>
                     <Formik
-                        initialValues={initialValues}
-                        onSubmit={(values) => registro(values)}
+                        initialValues={{
+                            name: user.name || '',
+                            surname: user.surname || '',
+                            email: user.email || '',
+                            username: user.username || '',
+                            password: '',
+                            passwordConfirm: '',
+                            phone: user.phone || '',
+                            locality: user.locality || '',
+                        }}
+                        onSubmit={(values) => Actualizar(values)}
                     >
                         {({ handleSubmit }) => (
                             <View style={styles.form}>
                                 <Input
-                                    placeholder='Username'
+                                    placeholder={user.username}
                                     name='username'
                                     style={styles.input}
                                     placeholderTextColor="#000"
                                 />
                                 <Input
-                                    placeholder='Email'
+                                    placeholder={user.email}
                                     name='email'
                                     style={styles.input}
                                     placeholderTextColor="#000"
@@ -84,32 +89,26 @@ const UpdateUser = () => {
                                     placeholderTextColor="#000"
                                 />
                                 <Input
-                                    placeholder='Nombre'
+                                    placeholder={user.name}
                                     name='name'
                                     style={styles.input}
                                     placeholderTextColor="#000"
                                 />
                                 <Input
-                                    placeholder='Apellido'
+                                    placeholder={user.surname}
                                     name='surname'
                                     style={styles.input}
                                     placeholderTextColor="#000"
                                 />
                                 <Input
-                                    placeholder='Teléfono'
+                                    placeholder={user.phone}
                                     name='phone'
                                     style={styles.input}
                                     placeholderTextColor="#000"
                                 />
                                 <Input
-                                    placeholder='Localidad'
+                                    placeholder={user.locality}
                                     name='locality'
-                                    style={styles.input}
-                                    placeholderTextColor="#000"
-                                />
-                                <Input
-                                    placeholder='Ruta de la imagen'
-                                    name='profilePicture'
                                     style={styles.input}
                                     placeholderTextColor="#000"
                                 />
@@ -124,7 +123,6 @@ const UpdateUser = () => {
         </>
     );
 };
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,

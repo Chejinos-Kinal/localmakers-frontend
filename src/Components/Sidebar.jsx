@@ -37,9 +37,6 @@ const Sidebar = () => {
                 <TouchableOpacity onPress={() => navigation.navigate('Notificaciones')} style={styles.sidebarButton}>
                 <Text style={styles.sidebarButtonText}>Notificaciones</Text>
             </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigation.navigate('Account')} style={styles.sidebarButton}>
-                  <Text style={styles.sidebarButtonText}>Cuenta</Text>
-              </TouchableOpacity>
               <TouchableOpacity onPress={() => navigation.navigate('UpdateUser')} style={styles.sidebarButton}>
                   <Text style={styles.sidebarButtonText}>Actualizar Datos</Text>
               </TouchableOpacity>
@@ -48,6 +45,9 @@ const Sidebar = () => {
                 </TouchableOpacity>
             </>
             )}
+             <TouchableOpacity onPress={() => navigation.navigate('Account')} style={styles.sidebarButton}>
+                  <Text style={styles.sidebarButtonText}>Cuenta</Text>
+              </TouchableOpacity>
             <TouchableOpacity onPress={handleExit} style={styles.sidebarButton}>
                 <Text style={styles.sidebarButtonText}>Cerrar Sesión</Text>
             </TouchableOpacity>

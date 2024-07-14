@@ -50,7 +50,7 @@ const Notificaciones = () => {
         };
         fetchWorkOffer();
     }, [userRole]);
-    console.log(TransaccionProfesional)
+    
 
     const formatDate = (dateString) => {
         return format(new Date(dateString), 'dd/MM/yyyy');
@@ -93,7 +93,7 @@ const Notificaciones = () => {
                             <View>
                                  {TransaccionProfesional.length > 0 ? (
                                     TransaccionProfesional.map((TransaccionProfesional, index) => (
-                                        <TouchableOpacity key={index}  onPress={() => navigation.navigate('ConfirmacionDeTrabajo' )}>
+                                        <TouchableOpacity key={index}  onPress={() => navigation.navigate('ConfirmacionDeTrabajo', {TransaccionProfesional} )}>
                                             <View style={style.containerCard}>
                                                 <Text style={style.textContainerTitle}> Usuario: {TransaccionProfesional.user.name}</Text>
                                                 <Text style={style.textCard}>Lugar: {TransaccionProfesional.finalOffer.workSite}</Text>
@@ -140,7 +140,7 @@ const Notificaciones = () => {
                             <View>
                             {TransaccionProfesional.length > 0 ? (
                                TransaccionProfesional.map((TransaccionProfesional, index) => (
-                                   <TouchableOpacity key={index}  onPress={() =>navigation.navigate('ConfirmacionDeTrabajo' )}>
+                                   <TouchableOpacity key={index}  onPress={() =>navigation.navigate('ConfirmacionDeTrabajo', {TransaccionProfesional} )}>
                                        <View style={style.containerCard}>
                                            <Text style={style.textContainerTitle}> Usuario: {TransaccionProfesional.professional.name}</Text>
                                            <Text style={style.textCard}>Lugar: {TransaccionProfesional.finalOffer.workSite}</Text>

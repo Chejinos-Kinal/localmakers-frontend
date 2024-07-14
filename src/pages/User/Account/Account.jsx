@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import Navbar from '../../../Components/Navbar';
 import { getAccount } from '../../../services/account.services';
+import { getReviewProfesionalStarRequest } from '../../../services/review.services'; // Import the new function
+import { FontAwesome } from '@expo/vector-icons';
 
 const Account = () => {
   const [account, setAccount] = useState([]);
+  const [averageRating, setAverageRating] = useState(0);
 
   useEffect(() => {
     const fetchAccount = async () => {
@@ -17,6 +20,19 @@ const Account = () => {
     };
 
     fetchAccount();
+  }, []);
+
+  useEffect(() => {
+    const fetchReviewProfesionalStar = async () => {
+      try {
+        const response = await getReviewProfesionalStarRequest();
+        setAverageRating(response.data.averageRating || 0);
+      } catch (error) {
+        console.error('Error fetching professional star rating:', error);
+        setAverageRating(0); // Fallback to default
+      }
+    };
+    fetchReviewProfesionalStar();
   }, []);
 
   return (
@@ -37,6 +53,17 @@ const Account = () => {
             </View>
           </View>
         )}
+        {/* Mostrar las estrellas basadas en averageRating */}
+        <View style={styles.stars}>
+          {[1, 2, 3, 4, 5].map((star) => (
+            <FontAwesome
+              key={star}
+              name={star <= averageRating ? "star" : "star-o"}
+              size={50}
+              color={star <= averageRating ? "#ffdd44" : "#a89ec9"}
+            />
+          ))}
+        </View>
       </ScrollView>
     </>
   );
@@ -86,6 +113,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
     color: '#2D3748',
+  },
+  stars: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginVertical: 8,
   },
 });
 

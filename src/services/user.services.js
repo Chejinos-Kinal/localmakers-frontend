@@ -65,3 +65,15 @@ export const dataUserRequest = async ()=>{
         }
     }
 }
+
+export const UpdateUser = async (id, data) => {
+  try {
+      const response = await apiClient.put(`/user/updateUser/${id}`, data);
+      return response.data; 
+  } catch (err) {
+      return {
+          error: true,
+          err
+      };
+  }
+};

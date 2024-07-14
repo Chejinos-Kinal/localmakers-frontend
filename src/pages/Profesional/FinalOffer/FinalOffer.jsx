@@ -113,7 +113,7 @@ const FinalOffer = () => {
                     style={styles.picker}
                   >
                     <Picker.Item label="Selecciona " value="" />
-                    <Picker.Item label="Tu localidad" value="Localidad del profesional" />
+                    <Picker.Item label="Mi localidad" value="Localidad del profesional" />
                     {workOfFer.workSite && <Picker.Item label={workOfFer.workSite} value={workOfFer.workSite} />}
                   </Picker>
                 </View>

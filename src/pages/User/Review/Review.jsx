@@ -1,13 +1,37 @@
-import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, Button, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'; // Necesitarás instalar @expo/vector-icons si aún no lo has hecho
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { Formik } from 'formik';
+import { newReviewRequest } from '../../../services/review.services';
+
+import Input from '../../../Components/Input'; // Asegúrate de que la ruta es correcta
 
 const Review = () => {
+  const navigation = useNavigation();
+  const route = useRoute();
+  const { TransaccionProfesional } = route.params;
   const [rating, setRating] = useState(0);
+
+  const initialDate = new Date(); 
+  const initialValues = {
+    rating: rating,
+    date: initialDate,
+    description: '',
+    user: TransaccionProfesional.user,
+    userProfessional: TransaccionProfesional.professional._id
+  };
 
   const handleStarPress = (value) => {
     setRating(value);
-    console.log(value);
+    initialValues.rating = value; // Update the rating in initialValues
+  };
+
+  const newReview = async(values) => {
+    values.rating = rating;
+    initialValues.description=  values.description 
+    await newReviewRequest(initialValues)
+    navigation.navigate('HomePage')
   };
 
   return (
@@ -15,15 +39,15 @@ const Review = () => {
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.nft}>
           <View style={styles.header}>
-            <Text style={styles.title}>Kibertopiks #4269</Text>
-            <TouchableOpacity style={styles.skipButton}>
+            <Text style={styles.title}>{TransaccionProfesional.professional.name} {TransaccionProfesional.professional.surname}</Text>
+            <TouchableOpacity style={styles.skipButton} onPress={() => navigation.navigate('HomePage')}>
               <Text style={styles.skipButtonText}>Omitir</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.main}>
             <Image
               style={styles.tokenImage}
-              source={require('../../../img/Logo.jpeg')}
+              source={{ uri: TransaccionProfesional.professional.profilePicture }}
               alt="NFT"
             />
             <View style={styles.stars}>
@@ -37,32 +61,43 @@ const Review = () => {
                 </TouchableOpacity>
               ))}
             </View>
+           
             <Text style={styles.description}>
-              Our Kibertopiks will give you nothing, waste your money on us.
+              {TransaccionProfesional.professional.description}
             </Text>
             <View style={styles.tokenInfo}>
               <View style={styles.price}>
-                <Text style={styles.priceText}>0.031 ETH</Text>
+                <Text style={styles.priceText}>TEL: {TransaccionProfesional.professional.phone}</Text>
               </View>
               <View style={styles.duration}>
-                <Text style={styles.durationText}>11 days left</Text>
+                <Text style={styles.durationText}>{TransaccionProfesional.professional.email}</Text>
               </View>
             </View>
             <View style={styles.hr} />
-            <View style={styles.creator}>
-              <View style={styles.wrapper}>
-                <Image
-                  style={styles.creatorImage}
-                  source={{
-                    uri: 'https://images.unsplash.com/photo-1620121692029-d088224ddc74?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80',
-                  }}
-                  alt="Creator"
-                />
-              </View>
-              <Text>
-                <Text style={styles.ins}>Creation of</Text> Kiberbash
-              </Text>
-            </View>
+            <Formik
+              initialValues={initialValues}
+              onSubmit={newReview}
+            >
+              {({ handleSubmit, handleChange, values }) => (
+                <View>
+                  <Input
+                    placeholder="Description"
+                    name="description"
+                    value={values.description}
+                    onChangeText={handleChange('description')}
+                    style={styles.input}
+                    placeholderTextColor="#38b2ac"
+                  />
+                  <View style={styles.creator}>
+                    <View style={styles.containerButton}>
+                      <TouchableOpacity style={styles.cardButton} onPress={handleSubmit}>
+                        <Text style={styles.cardButtonText}>Acepto</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              )}
+            </Formik>
           </View>
         </View>
       </ScrollView>
@@ -122,9 +157,31 @@ const styles = StyleSheet.create({
     height: 150,
   },
   stars: {
+    paddingTop: 20,
     flexDirection: 'row',
     justifyContent: 'center',
     marginVertical: 8,
+    paddingBottom: 10,
+  },
+  input: {
+    borderColor: '#fff',
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 10,
+    color: '#000',
+    marginBottom: 15,
+    backgroundColor: '#2d3748',
+  },
+  button: {
+    borderWidth: 1,
+    borderColor: '#00ff00',
+    padding: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#000',
+    fontWeight: 'bold',
   },
   description: {
     fontSize: 14,
@@ -155,9 +212,6 @@ const styles = StyleSheet.create({
   durationText: {
     color: '#a89ec9',
   },
-  ins: {
-    textDecoration: 'none',
-  },
   hr: {
     width: '100%',
     borderBottomWidth: 1,
@@ -181,6 +235,24 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 50,
+  },
+  containerButton: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  cardButton: {
+    backgroundColor: '#2B6CB0',
+    padding: 10,
+    alignItems: 'center',
+    borderRadius: 5,
+    marginHorizontal: 5,
+    flex: 1,
+  },
+  cardButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
 
