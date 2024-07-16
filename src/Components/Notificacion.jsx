@@ -11,6 +11,9 @@ const Notificacion = () => {
   const route = useRoute();
   const { workOfFer } = route.params;
   const { finalOffer } = route.params
+
+  const professional = workOfFer.professional
+
   const [role, setRole] = useState('');
   useEffect(() => {
     const fetchRole = async () => {
@@ -34,7 +37,9 @@ const Notificacion = () => {
   const formatDate = (dateString) => {
     return format(new Date(dateString), 'dd/MM/yyyy'); // Formatea la fecha a 'dd/MM/yyyy'
 };
-
+const handleChat = () => {
+  navigation.navigate('ChatRoom', { professional });
+};
 
 
   return (
@@ -68,6 +73,9 @@ const Notificacion = () => {
               <Text style={styles.cardButtonText}>No estoy interesado</Text>
             </TouchableOpacity>
           </View>
+          <TouchableOpacity style={styles.chatButton} onPress={handleChat}>
+          <Text style={styles.chatButtonText}>MIRAR CHAT</Text>
+        </TouchableOpacity>
         </View>
         
       )}
@@ -189,6 +197,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#81e6d9'
+  },
+  chatButton: {
+    backgroundColor: '#38A169',
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+    width: '100%',
+  },
+  chatButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 
 });

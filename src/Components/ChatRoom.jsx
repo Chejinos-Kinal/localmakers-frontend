@@ -1,61 +1,73 @@
-// ChatRoom.js
-
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import io from 'socket.io-client';
 import Navbar from './Navbar';
-
-const socket = io('http://localhost:3000'); 
+import { useRoute } from '@react-navigation/native';
 
 const ChatRoom = () => {
+  const route = useRoute();
+  const { professional } = route.params; 
+  const socket = io('http://192.168.0.18:3000'); // Cambia esto a la dirección de tu servidor
+
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    
+    // Unirse a la sala del profesional
+    socket.emit('join chat', professional._id);
+
+    // Escuchar mensajes de chat
     socket.on('chat message', (msg) => {
-      console.log('Mensaje recibido:', msg); 
-      setMessages((prevMessages) => [...prevMessages, msg]);
+      setMessages((prevMessages) => [...prevMessages, msg]); // Agregar nuevo mensaje
     });
-  
+
+    // Escuchar mensajes anteriores al conectarse
+    socket.on('previous messages', (msgs) => {
+      setMessages(msgs); // Configurar mensajes anteriores
+    });
+
     return () => {
-      socket.disconnect(); 
+      socket.off('chat message');
+      socket.off('previous messages');
     };
-  }, []);
+  }, [professional._id]);
+
   const sendMessage = () => {
     if (message.trim() !== '') {
-      socket.emit('chat message', message); 
+      // Emitir el mensaje junto con el ID del profesional
+      socket.emit('chat message', { msg: message, professionalId: professional._id });
       setMessage('');
     }
   };
+
   const renderItem = ({ item }) => (
     <View style={styles.messageContainer}>
-      <Text style={styles.messageText}>{item}</Text>
+      <Text style={styles.messageText}>{item.msg}</Text>
     </View>
   );
 
   return (
     <>
-    <Navbar/>
-    <View style={styles.container}>
-      <FlatList
-        data={messages}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-        inverted 
-      />
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Escribe un mensaje..."
-          value={message}
-          onChangeText={(text) => setMessage(text)}
+      <Navbar />
+      <View style={styles.container}>
+        <FlatList
+          data={messages}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+          inverted={false} // Mostrar el más reciente al final
         />
-        <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
-          <Text style={styles.sendButtonText}>Enviar</Text>
-        </TouchableOpacity>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Escribe un mensaje..."
+            value={message}
+            onChangeText={setMessage}
+          />
+          <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
+            <Text style={styles.sendButtonText}>Enviar</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
     </>
   );
 };
@@ -96,7 +108,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   messageContainer: {
-    alignSelf: 'flex-end',
+    alignSelf: 'flex-start',
     backgroundColor: '#DCF8C6',
     padding: 10,
     borderRadius: 10,

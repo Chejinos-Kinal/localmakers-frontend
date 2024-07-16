@@ -29,8 +29,10 @@ const Navbar = () => {
   const navigateHome = () => {
     if(userRole === 'ADMIN'){
       navigation.navigate('HomePageAdmin')
-    }else{
+    }else if(userRole === 'CLIENT'){
       navigation.navigate('HomePage')
+    }else{
+      navigation.navigate('Notificaciones')
     }
   };
 

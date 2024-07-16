@@ -26,7 +26,7 @@ const Register = () => {
   const registro = async (values) => {
     try {
       await registerRequest({ ...values, profilePicture: profileImage });
-      navigation.navigate('Home'); // Navigate to the Home screen after registration
+      navigation.navigate('Login'); // Navigate to the Home screen after registration
     } catch (error) {
       console.error('Error al registrarse', error);
     }
