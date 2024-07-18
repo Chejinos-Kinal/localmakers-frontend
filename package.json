@@ -19,6 +19,8 @@
     "axios": "^1.7.2",
     "date-fns": "^3.6.0",
     "expo": "~51.0.13",
+    "expo-file-system": "^17.0.1",
+    "expo-image-picker": "^15.0.7",
     "expo-status-bar": "~1.12.1",
     "formik": "^2.4.6",
     "react": "18.2.0",

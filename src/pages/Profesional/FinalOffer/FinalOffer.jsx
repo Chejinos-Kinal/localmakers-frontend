@@ -5,14 +5,15 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import Navbar from '../../../Components/Navbar';
 import { Formik } from 'formik';
 import Input from '../../../Components/Input';
-import { useLocation } from 'react-router-native';
+import {  useNavigation, useRoute } from '@react-navigation/native';
 import axios from 'axios';
 import { newFinalOffer } from '../../../services/FinalOffer.services';
+import { finalOfferValidateSchema } from '../../../validationSchemas/finalOffer';
 
 const FinalOffer = () => {
-  const location = useLocation();
-  const { workOfFer } = location.state;
-
+  const route = useRoute();
+  const { workOfFer } = route.params;
+  const navigation = useNavigation()
   const initialDate = new Date(); 
 
   const initialValues = {
@@ -53,7 +54,8 @@ const FinalOffer = () => {
         ...values,
         workDate: date
       };
-      await newFinalOffer(formData, workOfFer.user._id, workOfFer.professional, workOfFer._id)
+      await newFinalOffer(formData, workOfFer.user._id, workOfFer.professional._id, workOfFer._id)
+      navigation.navigate('Notificaciones')
     } catch (error) {
       console.error('Error submitting form:', error)
 
@@ -74,6 +76,7 @@ const FinalOffer = () => {
           <Formik
             initialValues={initialValues}
             onSubmit={handleSubmit}
+            validationSchema={finalOfferValidateSchema}
           >
             {({ values, setFieldValue }) => (
               <>

@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import Navbar from './Navbar'
 import { Picker } from '@react-native-picker/picker'
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { newTransactionRequest } from '../services/transaction.services'
 
 const MetodoDePago = () => {
   const route = useRoute();
   const { finalOffer } =  route.params
- 
+ const navigation = useNavigation()
   const [selectedValue, setSelectedValue] = useState('')
   const [values, setValues] = useState({
     finalOffer: finalOffer._id,
@@ -27,13 +27,12 @@ const MetodoDePago = () => {
 
 const newTransaction = async(values)=>{
     try {
-        return await newTransactionRequest(values)
+         await newTransactionRequest(values)
+         navigation.navigate('HomePage')
     } catch (error) {
         console.error(error)
     }
 }
-
-
   return (
     <>
       <Navbar/>

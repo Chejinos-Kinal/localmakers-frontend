@@ -1,11 +1,11 @@
-import { Formik } from 'formik';
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View, ScrollView, Image } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView, Image, Alert } from 'react-native';
+import { Formik } from 'formik';
+import * as ImagePicker from 'expo-image-picker';
 import Input from '../../../Components/Input';
 import { registerValidateSchema } from '../../../validationSchemas/register';
 import { registerRequest } from '../../../services/user.services';
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation
-import ImagePicker from 'react-native-image-picker';
+import { useNavigation } from '@react-navigation/native';
 
 const Register = () => {
   const initialValues = {
@@ -16,40 +16,52 @@ const Register = () => {
     password: '',
     phone: '',
     locality: '',
-    profilePicture: '', // To store the selected image path
+    profilePicture: '',
   };
 
-  const navigation = useNavigation(); // Use useNavigation
-
+  const navigation = useNavigation();
   const [profileImage, setProfileImage] = useState(null);
 
   const registro = async (values) => {
     try {
-      await registerRequest({ ...values, profilePicture: profileImage });
-      navigation.navigate('Login'); // Navigate to the Home screen after registration
+      initialValues.name = values.name
+      initialValues.surname = values.surname
+      initialValues.email = values.email
+      initialValues.username = values.surname
+      initialValues.password = values.password
+      initialValues.phone = values.phone
+      initialValues.locality = values.locality 
+      initialValues.profilePicture = profileImage
+      console.log(initialValues)
+      await registerRequest( initialValues);
+      navigation.navigate('Login');
     } catch (error) {
       console.error('Error al registrarse', error);
     }
   };
 
-  const handleChooseProfilePicture = () => {
-    const options = {
-      title: 'Seleccionar imagen de perfil',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
+  const handleChooseProfilePicture = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-    ImagePicker.showImagePicker(options, (response) => {
-      if (response.didCancel) {
-        console.log('Usuario canceló la selección de imagen');
-      } else if (response.error) {
-        console.log('Error:', response.error);
-      } else {
-        setProfileImage(response.uri); // Save the selected image in the state
-      }
+    if (permissionResult.granted === false) {
+      Alert.alert("Se requiere permiso para acceder a la galería.");
+      return;
+    }
+
+    const pickerResult = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      base64: false,
     });
+
+    if (pickerResult.cancelled === true) {
+      console.log('Selección de imagen cancelada');
+      return;
+    }
+
+    const selectedImageUri = pickerResult.assets[0].uri;
+
+    setProfileImage(selectedImageUri); 
   };
 
   return (
@@ -107,9 +119,14 @@ const Register = () => {
                 style={styles.input}
                 placeholderTextColor='#38b2ac'
               />
-              <TouchableOpacity onPress={handleChooseProfilePicture}>
+              <TouchableOpacity onPress={handleChooseProfilePicture} style={styles.button}>
                 <Text style={styles.buttonText}>Seleccionar Imagen de Perfil</Text>
               </TouchableOpacity>
+              {profileImage && (
+                <View style={styles.imageContainer}>
+                  <Image source={{ uri: profileImage }} style={styles.profileImage} />
+                </View>
+              )}
               <TouchableOpacity onPress={handleSubmit} style={styles.button}>
                 <Text style={styles.buttonText}>Registrarse</Text>
               </TouchableOpacity>
@@ -154,6 +171,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     alignItems: 'center',
+    marginBottom: 15,
   },
   buttonText: {
     color: '#000',
@@ -174,6 +192,22 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginBottom: 10,
     textAlign: 'center',
+  },
+  imageContainer: {
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  imageText: {
+    color: '#fff',
+    fontSize: 18,
+    marginBottom: 10,
+  },
+  profileImage: {
+    width: 200,
+    height: 200,
+    borderWidth: 2,
+    borderColor: '#38b2ac',
   },
 });
 

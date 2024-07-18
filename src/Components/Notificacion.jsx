@@ -11,10 +11,13 @@ const Notificacion = () => {
   const route = useRoute();
   const { workOfFer } = route.params;
   const { finalOffer } = route.params
-
-  const professional = workOfFer.professional
+  
+ 
 
   const [role, setRole] = useState('');
+  if(role === 'PROFESSION'){
+    const professional = workOfFer.professional
+  }
   useEffect(() => {
     const fetchRole = async () => {
       try {
@@ -73,9 +76,12 @@ const handleChat = () => {
               <Text style={styles.cardButtonText}>No estoy interesado</Text>
             </TouchableOpacity>
           </View>
+          <View style={styles.containerChat}>
           <TouchableOpacity style={styles.chatButton} onPress={handleChat}>
           <Text style={styles.chatButtonText}>MIRAR CHAT</Text>
         </TouchableOpacity>
+          </View>
+         
         </View>
         
       )}
@@ -126,6 +132,12 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#1a202c',
+    alignItems: 'center',
+  },
+  containerChat:{
+
+    paddingTop: 20,
+  
     alignItems: 'center',
   },
   profileContainer: {
@@ -199,6 +211,7 @@ const styles = StyleSheet.create({
     color: '#81e6d9'
   },
   chatButton: {
+    paddingTop:10,
     backgroundColor: '#38A169',
     padding: 15,
     borderRadius: 5,
