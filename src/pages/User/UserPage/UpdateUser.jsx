@@ -2,12 +2,13 @@ import { Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import Input from '../../../Components/Input';
-import { dataUserRequest, registerRequest } from '../../../services/user.services';
+import { dataUserRequest, UpdateUser } from '../../../services/user.services';
 import { useNavigation } from '@react-navigation/native';
 import Navbar from '../../../Components/Navbar';
 
-const UpdateUser = () => {
+const UpdateUsers = () => {
     const [user, setUser] = useState(null);
+    const [isUpdateProfessionsButtonEnabled, setIsUpdateProfessionsButtonEnabled] = useState(false);
     const navigation = useNavigation();
 
     useEffect(() => {
@@ -15,6 +16,7 @@ const UpdateUser = () => {
             try {
                 const response = await dataUserRequest();
                 setUser(response.data.foundedData);
+                setIsUpdateProfessionsButtonEnabled(response.data.foundedData.profession?.length > 1);
             } catch (error) {
                 console.error('Error al ver los datos del usuario', error);
             }
@@ -24,7 +26,7 @@ const UpdateUser = () => {
 
     const Actualizar = async (values) => {
         try {
-            const response = await UpdateUser(user._id, values);
+            const response = await UpdateUser(values);
             
             if (response.error) {
                 console.error('Error en la actualización:', response.err);
@@ -115,6 +117,13 @@ const UpdateUser = () => {
                                 <TouchableOpacity onPress={handleSubmit} style={styles.button}>
                                     <Text style={styles.buttonText}>Actualizar</Text>
                                 </TouchableOpacity>
+                                <TouchableOpacity 
+                                    style={[styles.button, !isUpdateProfessionsButtonEnabled && styles.buttonDisabled]} 
+                                    disabled={!isUpdateProfessionsButtonEnabled}
+                                    onPress={()=> navigation.navigate("UpdateProfessions")}
+                                >
+                                    <Text style={styles.buttonText}>Actualizar mis profesiones</Text>
+                                </TouchableOpacity>
                             </View>
                         )}
                     </Formik>
@@ -148,10 +157,14 @@ const styles = StyleSheet.create({
         marginBottom: 15,
     },
     button: {
+        marginTop: 10,
         backgroundColor: '#00ff00',
         padding: 10,
         borderRadius: 5,
         alignItems: 'center',
+    },
+    buttonDisabled: {
+        backgroundColor: '#aaa',
     },
     buttonText: {
         color: '#000',
@@ -170,4 +183,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default UpdateUser;
+export default UpdateUsers;

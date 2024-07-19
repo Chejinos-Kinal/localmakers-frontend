@@ -54,6 +54,8 @@ const Register = () => {
       base64: true,
     });
 
+    console.log(pickerResult)
+
     if (pickerResult.cancelled === true) {
       console.log('Selección de imagen cancelada');
       return;
