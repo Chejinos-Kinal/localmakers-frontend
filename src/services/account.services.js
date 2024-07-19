@@ -35,3 +35,23 @@ export const getAccount = async()=>{
         }
     }
 }
+export const getAccountAdmin =async()=>{
+  try {
+    return await apiClient.get('/account/getAccounts')
+  } catch (err) {
+    return {
+      err,
+      error: err
+    }
+  }
+}
+export const newPagoAdmin = async(id,data)=>{
+  try {
+    return await apiClient.put(`/account/ingreso/${id}`,data)
+  } catch (error) {
+    return {
+      err,
+       error: err
+    }
+  }
+} 

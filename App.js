@@ -14,7 +14,7 @@ import Account from './src/pages/User/Account/Account';
 import ChatRoom from './src/Components/ChatRoom';
 import HomePageAdmin from './src/pages/Admin/HomePage/HomePageAdmin';
 import ProfessionAdmin from './src/pages/Admin/Profession/ProfessionAdmin';
-import BecomeProfessional from './src/pages/User/BecomeProfessional/BecomeProfessional';
+import BecomeProfessional from './src/pages/User/BecomeProfessional/BecomeProfessional'
 import RegisterAdmin from './src/pages/Admin/RegisterAdminPage/RegisterAdmin';
 import Notificaciones from './src/Components/Notificaciones';
 import Notificacion from './src/Components/Notificacion';
@@ -23,7 +23,10 @@ import ConfirmRegister from './src/Components/ConfirmRegister';
 import MetodoDePago from './src/Components/MetodoDePago';
 import ConfirmacionDeTrabajo from './src/Components/ConfirmacionDeTrabajo';
 import ReviewAdmin from './src/pages/Admin/Review/ReviewAdmin';
-import UpdateProfessions from './src/pages/User/BecomeProfessional/UpdateProfessions';
+import UpdateProfessions from './src/pages/User/BecomeProfessional/UpdateProffesions';
+import { getAccountAdmin } from './src/services/account.services';
+import AccountAdmin from './src/pages/Admin/AccountAdmin/AccountAdmin';
+import AccountA from './src/pages/Admin/AccountAdmin/AccountA';
 
 const Stack = createNativeStackNavigator();
 
@@ -53,6 +56,9 @@ const App = () => {
           <Stack.Screen name="ConfirmacionDeTrabajo" component={ConfirmacionDeTrabajo} />
           <Stack.Screen name='ReviewAdmin' component={ReviewAdmin}/>
           <Stack.Screen name="UpdateProfessions" component={UpdateProfessions}/>
+          <Stack.Screen name="AccountAdmin" component={AccountAdmin}/>
+          <Stack.Screen name="AccountA" component={AccountA}/>
+
         </Stack.Navigator>
       </View>
     </NavigationContainer>

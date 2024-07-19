@@ -22,18 +22,7 @@ const Account = () => {
     fetchAccount();
   }, []);
 
-  useEffect(() => {
-    const fetchReviewProfesionalStar = async () => {
-      try {
-        const response = await getReviewProfesionalStarRequest();
-        setAverageRating(response.data.averageRating || 0);
-      } catch (error) {
-        console.error('Error fetching professional star rating:', error);
-        setAverageRating(0); // Fallback to default
-      }
-    };
-    fetchReviewProfesionalStar();
-  }, []);
+  
 
   return (
     <>
@@ -54,16 +43,7 @@ const Account = () => {
           </View>
         )}
         {/* Mostrar las estrellas basadas en averageRating */}
-        <View style={styles.stars}>
-          {[1, 2, 3, 4, 5].map((star) => (
-            <FontAwesome
-              key={star}
-              name={star <= averageRating ? "star" : "star-o"}
-              size={50}
-              color={star <= averageRating ? "#ffdd44" : "#a89ec9"}
-            />
-          ))}
-        </View>
+   
       </ScrollView>
     </>
   );

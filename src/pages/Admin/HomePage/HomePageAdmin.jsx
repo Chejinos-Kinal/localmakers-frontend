@@ -24,11 +24,18 @@ const HomePageAdmin = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ReviewAdmin')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ReviewAdmin')}>
             <Text style={styles.buttonText}>Reseñas</Text>
           </TouchableOpacity>
-         
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('AccountAdmin')}>
+            <Text style={styles.buttonText}>Cuentas de usuarios</Text>
+          </TouchableOpacity>
         </View>
+        <View style={styles.buttonContainer}>
+         
+          
+        </View>
+    
 
         <View style={styles.containerLetters}>
           <Image source={require('../../../img/LogoSinFondo.png')} style={styles.logo} />

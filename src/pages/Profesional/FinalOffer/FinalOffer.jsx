@@ -103,6 +103,7 @@ const FinalOffer = () => {
                     style={styles.input}
                     placeholder="Escribe el precio para el trabajo"
                     placeholderTextColor="#999"
+                     keyboardType="numeric"
                     value={values.price}
                     onChangeText={(text) => setFieldValue('price', text)}
                   />

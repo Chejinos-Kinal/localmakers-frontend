@@ -33,6 +33,7 @@ const ReviewAdmin = () => {
           {({ handleBlur, values, setFieldValue }) => (
             <Input
               placeholder='Agregar el correo del usuario a buscar'
+              placeholderTextColor='#81e6d9' 
               name='email'
               onBlur={() => {
                 setInitialValues((prevValues) => ({
