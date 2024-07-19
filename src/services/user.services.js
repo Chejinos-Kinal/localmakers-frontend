@@ -2,8 +2,8 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const apiClient = axios.create({
-  /*   baseURL: 'https://localmakers-backend.vercel.app', */
-  baseURL: 'http://192.168.0.18:2880',
+  baseURL: 'https://localmakers-backend.vercel.app',
+  //baseURL: 'http://192.168.43.194:2880',
   timeout: 5000,
 });
 
@@ -66,9 +66,9 @@ export const dataUserRequest = async ()=>{
     }
 }
 
-export const UpdateUser = async (id, data) => {
+export const UpdateUser = async (data) => {
   try {
-      const response = await apiClient.put(`/user/updateUser/${id}`, data);
+      const response = await apiClient.put(`/user/updateUser`, data);
       return response.data; 
   } catch (err) {
       return {

@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { useNavigation,  } from '@react-navigation/native';
+import { UpdateUser } from '../services/user.services';
 
 const Sidebar = () => {
     const navigation = useNavigation();
@@ -24,13 +25,30 @@ const Sidebar = () => {
         await AsyncStorage.clear();
         navigation.navigate('Login');
     };
+    const updateState = async()=>{
+        try {
+            data= {
+              role: 'CLIENT'
+            }
+         
+            await UpdateUser(data)
+            navigation.navigate('Login')
+        } catch (error) {``
+          console.error(error)
+        }
+      }
 
     return (
         <View style={styles.sidebarContainer}>
             {userRole === 'PROFESSIONAL' &&(
-                <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.sidebarButton}>
+                <>
+                <TouchableOpacity onPress={() => updateState()} style={styles.sidebarButton}>
                 <Text style={styles.sidebarButtonText}>Modo Cliente</Text>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('UpdateUser')} style={styles.sidebarButton}>
+                  <Text style={styles.sidebarButtonText}>Actualizar Datos</Text>
+              </TouchableOpacity>
+              </>   
             )}
             {userRole === 'CLIENT' &&(
                 <>

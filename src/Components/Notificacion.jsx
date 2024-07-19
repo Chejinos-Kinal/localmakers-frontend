@@ -15,9 +15,9 @@ const Notificacion = () => {
  
 
   const [role, setRole] = useState('');
-  if(role === 'PROFESSION'){
+
     const professional = workOfFer.professional
-  }
+  
   useEffect(() => {
     const fetchRole = async () => {
       try {

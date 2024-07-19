@@ -9,7 +9,7 @@ import Register from './src/pages/User/UserPage/Register';
 import MakeWorkOffer from './src/pages/User/WorkOffer/MakeWorkOffer';
 import Information from './src/pages/User/UserPage/Information';
 import Review from './src/pages/User/Review/Review';
-import UpdateUser from './src/pages/User/UserPage/UpdateUser';
+import UpdateUsers from './src/pages/User/UserPage/UpdateUser';
 import Account from './src/pages/User/Account/Account';
 import ChatRoom from './src/Components/ChatRoom';
 import HomePageAdmin from './src/pages/Admin/HomePage/HomePageAdmin';
@@ -22,6 +22,7 @@ import FinalOffer from './src/pages/Profesional/FinalOffer/FinalOffer';
 import ConfirmRegister from './src/Components/ConfirmRegister';
 import MetodoDePago from './src/Components/MetodoDePago';
 import ConfirmacionDeTrabajo from './src/Components/ConfirmacionDeTrabajo';
+import UpdateProfessions from './src/pages/User/BecomeProfessional/UpdateProfessions';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,7 +37,7 @@ const App = () => {
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="ProfessionalInformation" component={ProfessionalInformation} />
           <Stack.Screen name="MakeWorkOffer" component={MakeWorkOffer} />
-          <Stack.Screen name="UpdateUser" component={UpdateUser} />
+          <Stack.Screen name="UpdateUser" component={UpdateUsers} />
           <Stack.Screen name="Account" component={Account} />
           <Stack.Screen name="ChatRoom" component={ChatRoom} />
           <Stack.Screen name="HomePageAdmin" component={HomePageAdmin} />
@@ -49,6 +50,7 @@ const App = () => {
           <Stack.Screen name="ConfirmRegister" component={ConfirmRegister} />
           <Stack.Screen name="MetodoDePago" component={MetodoDePago} />
           <Stack.Screen name="ConfirmacionDeTrabajo" component={ConfirmacionDeTrabajo} />
+          <Stack.Screen name="UpdateProfessions" component={UpdateProfessions}/>
         </Stack.Navigator>
       </View>
     </NavigationContainer>

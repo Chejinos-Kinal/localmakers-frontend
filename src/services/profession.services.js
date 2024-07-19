@@ -1,12 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-
+ 
 const apiClient = axios.create({
-    /*   baseURL: 'https://localmakers-backend.vercel.app', */
-    baseURL: 'http://192.168.0.18:2880',
+    baseURL: 'https://localmakers-backend.vercel.app',
+    //baseURL: 'http://192.168.43.194:2880',
     timeout: 5000
 })
-
+ 
 apiClient.interceptors.request.use(
     async (config) => {
       try {
@@ -23,7 +23,7 @@ apiClient.interceptors.request.use(
       return Promise.reject(err);
     }
   );
-
+ 
  export const getUserProfessionRequest = async()  =>{
     try {
         return await apiClient.get('/user/getProf')
@@ -43,4 +43,15 @@ export const newProfession = async(data)=>{
             err
         }
     }
+}
+ 
+export const getProfessions = async() =>{
+  try {
+    return await apiClient.get('/profession/getProfession')
+  } catch (error) {
+    return {
+      error: true,
+      error
+    }
+  }
 }

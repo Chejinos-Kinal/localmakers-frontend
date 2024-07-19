@@ -53,7 +53,7 @@ const Register = () => {
       aspect: [4, 3],
       base64: false,
     });
-
+    console.log(pickerResult)
     if (pickerResult.cancelled === true) {
       console.log('Selección de imagen cancelada');
       return;

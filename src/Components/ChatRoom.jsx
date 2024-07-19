@@ -7,7 +7,7 @@ import { useRoute } from '@react-navigation/native';
 const ChatRoom = () => {
   const route = useRoute();
   const { professional } = route.params; 
-  const socket = io('http://192.168.0.18:3000'); // Cambia esto a la dirección de tu servidor
+  const socket = io('http://192.168.43.194:3000'); // Cambia esto a la dirección de tu servidor
 
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
