@@ -22,6 +22,7 @@ import FinalOffer from './src/pages/Profesional/FinalOffer/FinalOffer';
 import ConfirmRegister from './src/Components/ConfirmRegister';
 import MetodoDePago from './src/Components/MetodoDePago';
 import ConfirmacionDeTrabajo from './src/Components/ConfirmacionDeTrabajo';
+import ReviewAdmin from './src/pages/Admin/Review/ReviewAdmin';
 
 const Stack = createNativeStackNavigator();
 
@@ -49,6 +50,7 @@ const App = () => {
           <Stack.Screen name="ConfirmRegister" component={ConfirmRegister} />
           <Stack.Screen name="MetodoDePago" component={MetodoDePago} />
           <Stack.Screen name="ConfirmacionDeTrabajo" component={ConfirmacionDeTrabajo} />
+          <Stack.Screen name='ReviewAdmin' component={ReviewAdmin}/>
         </Stack.Navigator>
       </View>
     </NavigationContainer>

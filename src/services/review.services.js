@@ -49,12 +49,23 @@ export const getReviewProfesionalRequest = async(userProfessional)=>{
 }
 export const getReviewProfesionalStarRequest = async()=>{
   try {
-    return await apiClient.get(`/review/getProfesional`)
+    return await apiClient.get(`getProfesional`)
   } catch (err) {
     return {
       err,
       error: err
       
+    }
+  }
+}
+
+export const getReviewAdminRequest = async(emailProfesion)=>{
+  try {
+      return await apiClient.get(`/review/getAdminReview/${emailProfesion}`)
+  } catch (err) {
+    return{
+      err,
+      error: err
     }
   }
 }

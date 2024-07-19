@@ -24,16 +24,16 @@ const Register = () => {
 
   const registro = async (values) => {
     try {
-      initialValues.name = values.name
-      initialValues.surname = values.surname
-      initialValues.email = values.email
-      initialValues.username = values.surname
-      initialValues.password = values.password
-      initialValues.phone = values.phone
-      initialValues.locality = values.locality 
-      initialValues.profilePicture = profileImage
-      console.log(initialValues)
-      await registerRequest( initialValues);
+      initialValues.name = values.name;
+      initialValues.surname = values.surname;
+      initialValues.email = values.email;
+      initialValues.username = values.username;
+      initialValues.password = values.password;
+      initialValues.phone = values.phone;
+      initialValues.locality = values.locality;
+      initialValues.profilePicture = profileImage;
+
+      await registerRequest(initialValues);
       navigation.navigate('Login');
     } catch (error) {
       console.error('Error al registrarse', error);
@@ -51,7 +51,7 @@ const Register = () => {
     const pickerResult = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [4, 3],
-      base64: false,
+      base64: true,
     });
 
     if (pickerResult.cancelled === true) {
@@ -59,9 +59,8 @@ const Register = () => {
       return;
     }
 
-    const selectedImageUri = pickerResult.assets[0].uri;
-
-    setProfileImage(selectedImageUri); 
+    const selectedImageUri = pickerResult.assets[0].base64;
+    setProfileImage(`data:image/jpeg;base64,${selectedImageUri}`); 
   };
 
   return (
@@ -197,11 +196,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
     marginBottom: 20,
-  },
-  imageText: {
-    color: '#fff',
-    fontSize: 18,
-    marginBottom: 10,
   },
   profileImage: {
     width: 200,

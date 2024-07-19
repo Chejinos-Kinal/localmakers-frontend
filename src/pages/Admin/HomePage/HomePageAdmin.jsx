@@ -24,12 +24,10 @@ const HomePageAdmin = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Información del Profesional</Text>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ReviewAdmin')}>
+            <Text style={styles.buttonText}>Reseñas</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Estadísticas</Text>
-          </TouchableOpacity>
+         
         </View>
 
         <View style={styles.containerLetters}>
